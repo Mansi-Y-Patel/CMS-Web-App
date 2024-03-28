@@ -73,17 +73,16 @@ export default {
         console.log(student.stuId)
         // let result = await axios.get(`/SubjectInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
 
-        const currayid = await util.fetchacademicyear()
+        
+        let currayid = await util.fetchacademicyear()
+        currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
         let timetable
         if (result3.status == 200)
             timetable = result3.data
-        // console.log(timetable)
             const list = _.find(timetable.ttRecordList, record => {
-                console.log(record)
                 return record.timetableRecordInfos.length > 0
             })
-            console.log(list)
             const subjectlist= _.uniqBy(list.timetableRecordInfos,ob => {
                 console.log(ob.subjectInfos.subName)
                 return ob.subjectInfos.subName 

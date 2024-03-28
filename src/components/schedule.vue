@@ -4,7 +4,6 @@
 
     <div class="flex">
         <Aside />
-        <p>hellooo</p>
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
 
             <div class="flex text-2xl font-bold items-center justify-between">
@@ -16,297 +15,16 @@
                 </a>
             </div>
 
-            <!-- Timetable -->
-            <div class="">
-                <table class="w-full">
-                    <tr class="">
-                        <th class="p-1"></th>
-                        <th class="p-1">MON</th>
-                        <th class="p-1">TUE</th>
-                        <th class="p-1">WED</th>
-                        <th class="p-1">THU</th>
-                        <th class="p-1">FRI</th>
-                        <th class="p-1">SAT</th>
-                    </tr>
-                    <tr class="">
-                        <th class="p-2">9.45</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-3 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
+            <div>
+
+                <div v-for="dayName in dayNameList">
+                    <h2 class="text-lg font-bold">{{ dayName }}</h2>
+                    <div v-for="record in timetable">
+                            <div v-if="record.ttDay==dayName">
+                                <TimeTableRecordInfo :record="record"></TimeTableRecordInfo>
                             </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">10.45</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">11.45</th>
-                        <td colspan="6" class="p-2 m-2 bg-gray-200 rounded-lg">Lunch Break</td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">12.25</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">1.25</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">2.25</th>
-                        <td colspan="6" class="p-2 m-2 bg-gray-200 rounded-lg">Break</td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">2.40</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class=" ">
-                        <th class="p-2">3.35</th>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                        <td class="p-2 bg-gray-200 rounded-lg">
-                            <div class="flex  gap-2 justify-around">
-                                <p>CN</p>
-                                <p>AMR</p>
-                                <p>305</p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                    </div> 
+                </div>               
             </div>
 
             <div class="p-4 my-3 lg:grid lg:grid-cols-2 w-full gap-3">
@@ -349,17 +67,20 @@ import axios from '../axios.js';
 import Aside from './aside.vue'
 import Nav from './nav.vue'
 import util from '../util.js'
+import TimeTableRecordInfo from './timetablerecord.vue';
 export default {
     name: 'Schedule',
     components: {
         Aside,
+        TimeTableRecordInfo,
         Nav
     },
     data() {
         return {
             student: [],
             attendance: [],
-            list:[]
+            timetable:[],
+            dayNameList:["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"]
         }
     },
     async mounted() {
@@ -372,20 +93,20 @@ export default {
         const student = await util.fetchstuInfo()
         console.log(student.stuId)
 
-        const currayid = await util.fetchacademicyear()
+        let currayid = await util.fetchacademicyear()
+        currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
 
         let timetable
-        if (result3.status == 200)
+        if (result3.status == 200){
             timetable = result3.data
-        console.log(timetable)
-            this.list = _.filter(timetable.ttRecordList, record => {
-                // console.log(record)
+            const list = _.filter(timetable.ttRecordList, record => {
                 return record.timetableRecordInfos.length > 0
             })
-            console.log(this.list[0].timetableRecordInfos)
-            console.log(this.list[0].timetableRecordInfos[0])
-
+            console.log(list[0].timetableRecordInfos)
+            console.log(list[0].timetableRecordInfos[0])
+            this.timetable=list[0].timetableRecordInfos
+        }
 
             // if(this.list[0].timetableRecordInfos[0].ttDay== 'MONDAY' && this.list[0].timetableRecordInfos[0].ttStartTime== '01:25:00') {
             //     console.log(this.list[0].timetableRecordInfos[0].subjectInfos.subName)

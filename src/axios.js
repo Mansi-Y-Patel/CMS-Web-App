@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:4040/cmsdbapi';
+axios.defaults.baseURL = 'https://svitcms.tech/cmsdbapi';
 export default axios
