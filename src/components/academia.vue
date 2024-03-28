@@ -75,7 +75,7 @@ export default {
 
         
         let currayid = await util.fetchacademicyear()
-        currayid=10-1
+        // currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
         let timetable
         if (result3.status == 200)

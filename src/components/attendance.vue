@@ -11,7 +11,7 @@
                 <div class="" v-if="chartData && chartData.length>1">
                     <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
                 </div>
-                <div class="" v-else>Loading...</div>
+                <div class="p-3" v-else>Loading...</div>
             </div>
 
             <div class="p-1 m-1 shadow-md shadow-gray-400 rounded-lg w-full">
@@ -19,7 +19,7 @@
                 <div class="" v-if="chartDatap && chartDatap.length>1">
                     <GChart type="ColumnChart" :data="chartDatap" :options="chartOptions" />
                 </div>
-                <div class="" v-else>Loading...</div>
+                <div class="p-3" v-else>Loading...</div>
             </div>
         </div>
 

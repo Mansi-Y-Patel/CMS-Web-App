@@ -15,16 +15,15 @@
                 </a>
             </div>
 
-            <div>
-
-                <div v-for="dayName in dayNameList">
-                    <h2 class="text-lg font-bold">{{ dayName }}</h2>
-                    <div v-for="record in timetable">
-                            <div v-if="record.ttDay==dayName">
-                                <TimeTableRecordInfo :record="record"></TimeTableRecordInfo>
-                            </div>
-                    </div> 
-                </div>               
+            <div v-for="dayName in dayNameList" class="m-4 w-full">
+                <h2 class="font-bold m-1">{{ dayName }}</h2>
+                <div class="grid grid-flow-col">
+                    <div v-for="record in timetable" class="m-1">
+                        <div v-if="record.ttDay==dayName">
+                            <TimeTableRecordInfo :record="record"></TimeTableRecordInfo>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="p-4 my-3 lg:grid lg:grid-cols-2 w-full gap-3">
@@ -32,13 +31,13 @@
                 <!-- Subject list -->
                 <div class="w-full shadow-sm shadow-gray-500 rounded-lg p-3 m-2">
                     <div class="flex text-xl font-medium px-2 items-center">
-                    <i class="fa-solid fa-book p-2"></i>
-                    <p class="p-2">Subjects</p>
+                        <i class="fa-solid fa-book p-2"></i>
+                        <p class="p-2">Subjects</p>
                     </div>
-                    
-                    <div class="m-2">
-                        <p class="p-1">CN</p>
-                        <p class="p-1">AI</p>
+                    <div class="grid grid-cols-2 gap-2 m-4">
+                        <div v-for="record in timetable" class="">
+                            <Subjects :record="record" class=""></Subjects>
+                        </div>
                     </div>
                 </div>
 
@@ -47,11 +46,12 @@
                     <div class="flex text-xl font-medium px-2 items-center">
                         <i class="fa-solid fa-graduation-cap p-2"></i>
                         <p class="p-2">Faculties</p>
-                        </div>
+                    </div>
                     <p class="text-xl font-medium px-2"></p>
-                    <div class="m-2">
-                        <p class="p-1">CN</p>
-                        <p class="p-1">AI</p>
+                    <div class="grid grid-cols-2 gap-2 m-4">
+                        <div v-for="record in timetable" class="">
+                            <Faculties :record="record"></Faculties>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,19 +68,23 @@ import Aside from './aside.vue'
 import Nav from './nav.vue'
 import util from '../util.js'
 import TimeTableRecordInfo from './timetablerecord.vue';
+import Subjects from './subjects.vue'
+import Faculties from './faculties.vue'
 export default {
     name: 'Schedule',
     components: {
         Aside,
         TimeTableRecordInfo,
-        Nav
+        Nav,
+        Subjects,
+        Faculties
     },
     data() {
         return {
             student: [],
             attendance: [],
-            timetable:[],
-            dayNameList:["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"]
+            timetable: [],
+            dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         }
     },
     async mounted() {
@@ -94,32 +98,19 @@ export default {
         console.log(student.stuId)
 
         let currayid = await util.fetchacademicyear()
-        currayid=10-1
+        // currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
 
         let timetable
-        if (result3.status == 200){
+        if (result3.status == 200) {
             timetable = result3.data
             const list = _.filter(timetable.ttRecordList, record => {
                 return record.timetableRecordInfos.length > 0
             })
             console.log(list[0].timetableRecordInfos)
             console.log(list[0].timetableRecordInfos[0])
-            this.timetable=list[0].timetableRecordInfos
+            this.timetable = list[0].timetableRecordInfos
         }
-
-            // if(this.list[0].timetableRecordInfos[0].ttDay== 'MONDAY' && this.list[0].timetableRecordInfos[0].ttStartTime== '01:25:00') {
-            //     console.log(this.list[0].timetableRecordInfos[0].subjectInfos.subName)
-            // }
-
     },
 }
 </script>
-
-
-<style>
-    td, th {
-        border: white 3px solid;
-        text-align: center;
-    }
-</style>

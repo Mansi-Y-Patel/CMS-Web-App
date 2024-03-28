@@ -1,7 +1,9 @@
 <template>    
-    <div class="border-b">
-        
-        {{ record.ttStartTime }}-{{ record.ttEndTime }}<br/>{{ record.subjectInfos.subName }}
+    <div class="shadow-sm shadow-blue-500 rounded-lg p-2 w-full">
+        {{ record.ttStartTime }}-{{ record.ttEndTime }}<br>
+        {{ record.subjectInfos.subAlias }} ({{record.ttLoadType}})<br>
+        {{ record.facultyInfos?.firstName[0] }}{{ record.facultyInfos?.middleName[0] }}{{ record.facultyInfos?.lastName[0] }}<br>
+        {{ record.locationInfos?.locName }}
     </div>
 </template>
 
