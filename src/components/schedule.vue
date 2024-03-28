@@ -4,6 +4,7 @@
 
     <div class="flex">
         <Aside />
+        <p>hellooo</p>
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
 
             <div class="flex text-2xl font-bold items-center justify-between">
