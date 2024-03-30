@@ -1,5 +1,5 @@
 <template>
-<div class="my-4">
+<div class="lg:my-4">
     <div class="flex flex-col justify-center md:flex-row sm:flex-row ">
 
         <!-- Login page: left section -->

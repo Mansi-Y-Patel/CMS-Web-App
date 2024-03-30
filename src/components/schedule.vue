@@ -17,7 +17,7 @@
 
             <div v-for="dayName in dayNameList" class="m-4 w-full">
                 <h2 class="font-bold m-1">{{ dayName }}</h2>
-                <div class="grid grid-flow-col">
+                <div class="grid lg:grid-flow-col">
                     <div v-for="record in timetable" class="m-1">
                         <div v-if="record.ttDay==dayName">
                             <TimeTableRecordInfo :record="record"></TimeTableRecordInfo>
