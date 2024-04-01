@@ -15,7 +15,8 @@
                 </a>
             </div>
 
-            <div v-for="dayName in dayNameList" class="m-4 w-full">
+            <!-- Timetable -->
+            <div v-for="dayName in dayNameList" class="p-2 m-2 w-full">
                 <h2 class="font-bold m-1">{{ dayName }}</h2>
                 <div class="grid lg:grid-flow-col">
                     <div v-for="record in timetable" class="m-1">
@@ -34,7 +35,7 @@
                         <i class="fa-solid fa-book p-2"></i>
                         <p class="p-2">Subjects</p>
                     </div>
-                    <div class="grid grid-cols-2 gap-2 m-4">
+                    <div class="lg:grid lg:grid-cols-2 gap-2 m-4">
                         <div v-for="record in timetable" class="">
                             <Subjects :record="record" class=""></Subjects>
                         </div>
@@ -48,7 +49,7 @@
                         <p class="p-2">Faculties</p>
                     </div>
                     <p class="text-xl font-medium px-2"></p>
-                    <div class="grid grid-cols-2 gap-2 m-4">
+                    <div class="lg:grid lg:grid-cols-2 gap-2 m-4">
                         <div v-for="record in timetable" class="">
                             <Faculties :record="record"></Faculties>
                         </div>

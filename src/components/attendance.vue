@@ -76,7 +76,6 @@ export default {
                 // width_units: '%',
                 colors: ['#1c64f2', 'B4D4FF'],
                 vAxis: {
-                    
                     gridlines: {
                         color: "transparent",
                     },
@@ -84,6 +83,9 @@ export default {
                     textPosition: "none",
                     // borderRadius: 50,
                 },
+                // series: {
+                //     borderRadius: 20,
+                // },
                 hAxis: {
                     textStyle: {
                         fontSize: '12',

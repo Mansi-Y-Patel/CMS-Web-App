@@ -125,6 +125,9 @@ export default {
                     baselineColor: "transparent",
                     textPosition: "none",
                 },
+                vAxis: {
+                    textPosition: "none",
+                }
                 // hAxis: {
                 //     textStyle: {
                 //         fontSize: '12',
@@ -159,7 +162,7 @@ export default {
                 this.present = _.countBy(attendance, record => {
                     return record.attndanceInfos[0].attPresent == 1
                 })
-                // console.log(this.present)
+                console.log(this.present)
                 // console.log(subject.subAlias, this.present)
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0

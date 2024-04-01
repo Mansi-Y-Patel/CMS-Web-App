@@ -23,47 +23,33 @@
                     <!-- Ongoing and upcomimg lectures -->
                     <div class="flex flex-col gap-2 m-2 text-black">
                         <div class="flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
-                            <div class="p-2 w-2/3 mx-4 ">
+                            <div class="p-1 w-2/3 mx-4 ">
                                 <p class="">Ongoing</p>
                                 <!-- {{  new Date() }} -->
                                 <p class="font-bold text-xl my-3">Mobile application development</p>
                                 <p class="font-bold">Lab</p>
                             </div>
-                            <div class="p-2 w-1/3 mx-4">
+                            <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
                             </div>
                         </div>
                         <div class="flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
-                            <div class="p-2 w-2/3 mx-4">
+                            <div class="p-1 w-2/3 mx-4">
                                 <p class="">Upcoming</p>
                                 <p class="font-bold text-xl my-3"></p>
                                 <p class="font-bold"></p>
                             </div>
-                            <div class="p-2 w-1/3 mx-4">
+                            <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
                             </div>
                         </div>
                     </div>
 
-                    <!-- To-do list -->
-                    <div class="p-3 m-2 rounded-lg shadow-md shadow-gray-400">
-                        <p class="text-medium font-bold">To-Do</p>
-                        <!-- <h1 class="text-medium font-bold">To-Do List</h1>
-                        <div class="flex mb-10">
-                            <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="flex flex-1 p-2 mr-2 border-1 rounded-sm border-gray-500">
-                            <button @click="addNote" class="add-button bg-blue-700 rounded-lg text-white w-full p-1">Add</button>
-                        </div>
-                        <div v-if="notes.length === 0" class="text-center p-2">{{ noNotesMessage }}</div>
-                        <div v-else class="border-1 rounded-sm max-h-2 overflow-y-auto">
-                            <ul>
-                                <li v-for="(note, index) in notes" :key="index" class="flex items-center p-2 border-b border-gray-800">
-                                    <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
-                                    <span :class="{ completed: note.completed }">{{ note.text }}</span>
-                                    <button @click="editNote(index)" class="edit-button">Edit</button>
-                                    <button @click="deleteNote(index)" class="delete-button">Delete</button>
-                                </li>
-                            </ul>
-                        </div> -->
+                    <!-- Announcements -->
+                    <div class="m-2 p-3 rounded-lg shadow-md shadow-gray-400">
+                        <p class="text-medium font-bold">Announcements:</p>
+                        <p></p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="w-full">
@@ -87,11 +73,25 @@
                         </div>
                     </div>
 
-                    <!-- Announcements -->
-                    <div class="m-2 p-3 rounded-lg shadow-md shadow-gray-400">
-                        <p class="text-medium font-bold">Announcements:</p>
-                        <p></p>
-                        <p></p>
+                    <!-- To-do list -->
+                    <div class="p-3 m-2 rounded-lg shadow-md shadow-gray-400">
+                        <p class="text-medium font-bold">To-Do</p>
+                        <!-- <h1 class="text-medium font-bold">To-Do List</h1>
+                        <div class="flex mb-10">
+                            <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="flex flex-1 p-2 mr-2 border-1 rounded-sm border-gray-500">
+                            <button @click="addNote" class="add-button bg-blue-700 rounded-lg text-white w-full p-1">Add</button>
+                        </div>
+                        <div v-if="notes.length === 0" class="text-center p-2">{{ noNotesMessage }}</div>
+                        <div v-else class="border-1 rounded-sm max-h-2 overflow-y-auto">
+                            <ul>
+                                <li v-for="(note, index) in notes" :key="index" class="flex items-center p-2 border-b border-gray-800">
+                                    <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
+                                    <span :class="{ completed: note.completed }">{{ note.text }}</span>
+                                    <button @click="editNote(index)" class="edit-button">Edit</button>
+                                    <button @click="deleteNote(index)" class="delete-button">Delete</button>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@ export default {
                     ['Attended',4]
                 ],
                 this.chartOptions = {
-                        pieHole: 0.4,
+                        pieHole: 0.3,
                         width:145,
                         height:145,
                         pieSliceTextStyle: {
@@ -147,7 +147,7 @@ export default {
                         },
                         slices: [{color: 'black'}, {color: '#1c64f2'}],
                         legend: 'none',
-                        chartArea:{left:5, right:5, top:5, bottom:5},
+                        chartArea:{left:5, right:25, top:5, bottom:5},
                         backgroundColor: "transparent",
                 }
         }

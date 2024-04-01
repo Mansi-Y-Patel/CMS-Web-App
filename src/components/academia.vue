@@ -15,8 +15,8 @@
         <section class="bg-white dark:bg-gray-900">
 
             <!-- Subjects -->
-            <div class="lg:grid lg:grid-cols-3 ">
-                <div v-for="subject in subjects" class="m-1">
+            <div class="lg:grid lg:grid-cols-3">
+                <div v-for="subject in subjects" class="m-2">
                     <!-- <routerlink to="/subjectinfo/:id?" :class="{ active: $route.path === '/subjectinfo/:id?' }"> -->
                     <div class="p-4 lg:h-36 bg-blue-600 text-white rounded-lg shadow-gray-400 shadow-md hover:bg-blue-700 dark:bg-gray-800">
                         <h2 class="mb-2 text-xl font-extrabold text-white">
