@@ -65,9 +65,15 @@ export default {
                 }]
             ],
             chartOptions: {
+                series: {
+                    0: {
+                        borderRadius: 60
+                    },
+                },
                 height: 300,
                 responsive: true,
-                isStacked: true,
+                // isStacked: true,
+                isStacked: 'percent',
                 chartArea: {
                     left: 50,
                     top: 10,

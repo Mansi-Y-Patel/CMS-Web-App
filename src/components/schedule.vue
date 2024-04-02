@@ -18,9 +18,9 @@
             <!-- Timetable -->
             <div v-for="dayName in dayNameList" class="p-2 m-2 w-full">
                 <h2 class="font-bold m-1">{{ dayName }}</h2>
-                <div class="grid lg:grid-flow-col">
-                    <div v-for="record in timetable" class="m-1">
-                        <div v-if="record.ttDay==dayName">
+                <div class="grid lg:grid-flow-col" v-if="timetable">
+                    <div v-for="record,index in timetableByDay(dayName)" class="m-1">
+                        <div>
                             <TimeTableRecordInfo :record="record"></TimeTableRecordInfo>
                         </div>
                     </div>
@@ -35,8 +35,8 @@
                         <i class="fa-solid fa-book p-2"></i>
                         <p class="p-2">Subjects</p>
                     </div>
-                    <div class="lg:grid lg:grid-cols-2 gap-2 m-4">
-                        <div v-for="record in timetable" class="">
+                    <div class="gap-2 m-4">
+                        <div v-for="record in subjectList" class="">
                             <Subjects :record="record" class=""></Subjects>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                         <p class="p-2">Faculties</p>
                     </div>
                     <p class="text-xl font-medium px-2"></p>
-                    <div class="lg:grid lg:grid-cols-2 gap-2 m-4">
-                        <div v-for="record in timetable" class="">
+                    <div class="m-4">
+                        <div v-for="record in facultyList" class="">
                             <Faculties :record="record"></Faculties>
                         </div>
                     </div>
@@ -113,5 +113,22 @@ export default {
             this.timetable = list[0].timetableRecordInfos
         }
     },
+    computed: {
+        timetableByDay() {
+
+            return dayName => _.filter(this.timetable, ob => {
+                const [hours, minutes, seconds] = ob.ttStartTime.split(':');
+                const totalSeconds = (+hours) * 60 * 60 + (+minutes) * 60 + (+seconds);
+                console.log("---", totalSeconds, ob.ttStartTime)
+                return ob.ttDay == dayName
+            })
+        },
+        subjectList() {
+            return _.uniqBy(this.timetable, ob => ob.subjectInfos ? .subId)
+        },
+        facultyList() {
+            return _.uniqBy(this.timetable, ob => ob.facultyInfos ? .empId)
+        },
+    }
 }
 </script>

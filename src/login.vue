@@ -1,5 +1,5 @@
 <template>
-<div class="lg:my-4">
+<div class="lg:my-12">
     <div class="flex flex-col justify-center md:flex-row sm:flex-row ">
 
         <!-- Login page: left section -->
@@ -24,7 +24,7 @@
                     <i class="fa-solid fa-lock"></i>
                     <input v-model="password" placeholder="Password" :type="showPassword?'text':'password'" class="border-0" required />
                     <button type="button" @click="togglePasswordVisibility">
-                        <i class="fa-solid fa-eye" :class="{'fa-solid fa-eye-slash': !showPassword }"></i>
+                        <i class="fa-solid" :class="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
                     </button>
                 </div>
                 <p><a href="" class="text-sm font-medium text-blue-600 hover:font-bold">Forgot your Password?</a></p>

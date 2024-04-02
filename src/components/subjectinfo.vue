@@ -37,7 +37,13 @@
             </div>
         </div>
 
-        <div class="text-xl font-semibold my-4 mx-2">Study material</div>
+        <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
+            <p class="text-lg font-semibold p-2">Google Drive Link</p>
+            <div class="mx-5 my-2">
+            </div>
+        </div>
+
+        <!-- <div class="text-xl font-semibold my-4 mx-2">Study material</div>
         <div class="lg:grid lg:grid-cols-2 mt-4">
             <div class="m-1 p-4 bg-blue-600 text-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <h2 class="mb-2 text-xl font-extrabold tracking-tight text-white">
@@ -67,7 +73,7 @@
                     <i class="fa-solid fa-arrow-right font-bold text-2xl"></i>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </main>
 </div>
@@ -110,13 +116,12 @@ export default {
             chartOptions: {
                 height: 300,
                 responsive: true,
-                isStacked: true,
+                isStacked: 'percent',
                 chartArea: {
                     left: 50,
                     top: 10,
                     bottom: 40,
                 },
-                // width_units: '%',
                 colors: ['#1c64f2', 'B4D4FF'],
                 hAxis: {
                     gridlines: {
@@ -127,12 +132,15 @@ export default {
                 },
                 vAxis: {
                     textPosition: "none",
-                }
-                // hAxis: {
-                //     textStyle: {
-                //         fontSize: '12',
-                //     },
-                // }
+                },
+                // annotations: {
+                //     boxStyle: {
+                //         rx: 80,
+                //         ry: 80,
+                //     }
+                // },
+
+                
             }
         }
     },
@@ -166,12 +174,12 @@ export default {
                 // console.log(subject.subAlias, this.present)
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0
+                console.log(presentcount)
 
                 this.chartData.push([subject.subAlias, presentcount, absentcount, presentcount + absentcount])
                 // console.log(this.chartData)
             }
         },
-        // drawchart() {},
 
         // for practical
         async fetchAttp(token, subject) {

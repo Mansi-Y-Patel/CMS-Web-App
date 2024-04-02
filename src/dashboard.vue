@@ -11,7 +11,7 @@
                     <div class="flex gap-2 m-2 rounded-lg">
 
                         <!-- Name -->
-                        <div class="text-lg items-center  w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg">Welcome<br><span class="font-bold">{{ student.stuFirstname }} {{ student.stuLastname }}</span> </div>
+                        <div class="text-lg items-center  w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg">Welcome<br><span class="font-bold">{{ student1.stuFirstname }} {{ student1.stuLastname }}</span> </div>
 
                         <!-- Link to Schedule page -->
                         <router-link to="/schedule" :class="{ active: $route.path === '/schedule' }" class="flex items-center text-lg font-semibold w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg justify-around hover:bg-gray-100 hover:text-blue-600">
@@ -102,6 +102,7 @@
 
 <script>
 import 'flowbite';
+import _ from 'lodash'
 import moment from 'moment';
 import axios from './axios.js';
 import util from './util.js';
@@ -114,7 +115,9 @@ import {
 import {
     GChart
 } from 'vue-google-charts';
-import { size } from 'lodash';
+import {
+    size
+} from 'lodash';
 
 export default {
     name: 'Dashboard',
@@ -125,30 +128,43 @@ export default {
     },
     data() {
         return {
-            student: [],
+            student1: [],
             todolist: [],
+            student:[],
+            attendance: [],
+            timetable: [],
+            dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         }
     },
     methods: {
         drawchart() {
             this.chartData = [
                     ['Effort', 'Amount given'],
-                    ['Absent',1],
-                    ['Attended',4]
+                    ['Absent', 1],
+                    ['Attended', 4]
                 ],
                 this.chartOptions = {
-                        pieHole: 0.3,
-                        width:145,
-                        height:145,
-                        pieSliceTextStyle: {
-                            color: 'white',
-                            bold:'true',
-                            fontSize: 13,
-                        },
-                        slices: [{color: 'black'}, {color: '#1c64f2'}],
-                        legend: 'none',
-                        chartArea:{left:5, right:25, top:5, bottom:5},
-                        backgroundColor: "transparent",
+                    pieHole: 0.3,
+                    width: 145,
+                    height: 145,
+                    pieSliceTextStyle: {
+                        color: 'white',
+                        bold: 'true',
+                        fontSize: 13,
+                    },
+                    slices: [{
+                        color: 'black'
+                    }, {
+                        color: '#1c64f2'
+                    }],
+                    legend: 'none',
+                    chartArea: {
+                        left: 5,
+                        right: 25,
+                        top: 5,
+                        bottom: 5
+                    },
+                    backgroundColor: "transparent",
                 }
         }
     },
@@ -169,24 +185,48 @@ export default {
         const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
 
+        const academicyear = await util.fetchacademicyear()
+        console.log(academicyear)
+
+        const student = await util.fetchstuInfo()
+        console.log(student.stuId)
+
+        // Personal information of student
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
         if (result.status == 200)
-            this.student = result.data[0]
-        console.log(this.student)
+            this.student1 = result.data[0]
+        console.log(this.student1)
 
         // let result2 = await axios.get(`/Todo/Todo_find/${localStorage.getItem('userid')}&access_token=${token}`);
         // if (result2.status == 200)
         // this.todolist = result2.data[0]
         // console.log(this.todolist)
 
-        const currayid = await util.fetchacademicyear()
+        // Timetable info
+        let currayid = await util.fetchacademicyear()
 
-        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${this.student.stuId}/${currayid}?access_token=${token}`)
-        if (result3.status == 200)
-            this.timetable = result3.data
-        console.log(this.timetable.ttRecordList)
-        console.log(new Date())
+        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
+        
+        let timetable
+        if (result3.status == 200){
+                timetable = result3.data
+            const list = _.filter(timetable.ttRecordList, record => {
+                return record.timetableRecordInfos.length > 0
+            })
+
+        console.log(list[0].timetableRecordInfos)
+        console.log(list[0].timetableRecordInfos[0])
+        this.timetable = list[0].timetableRecordInfos
+
+
+        console.log(this.dayNameList[new Date().getUTCDay() - 1])
+        console.log(new Date().getHours() % 12)
+        console.log(new Date().getMinutes()) 
+
+        
+    }
     },
+    
     setup() {
         const currentDate = new Date();
         const currentYear = ref(currentDate.getFullYear());
