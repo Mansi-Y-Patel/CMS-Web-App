@@ -1,5 +1,5 @@
 <template>
-<div class="w-full bg-gray-50 dark:bg-gray-900">
+<div class="w-full dark:bg-gray-900">
     <Nav />
 
     <div class="flex">
@@ -30,10 +30,10 @@
             <div class="p-4 my-3 lg:grid lg:grid-cols-2 w-full gap-3">
 
                 <!-- Subject list -->
-                <div class="w-full shadow-sm shadow-gray-500 rounded-lg p-3 m-2">
-                    <div class="flex text-xl font-medium px-2 items-center">
-                        <i class="fa-solid fa-book p-2"></i>
-                        <p class="p-2">Subjects</p>
+                <div class="w-full shadow-sm shadow-gray-500 rounded-lg p-1 m-2">
+                    <div class="flex font-medium px-2 items-center">
+                        <i class="fa-solid fa-book p-1"></i>
+                        <p class="p-1">Subjects</p>
                     </div>
                     <div class="gap-2 m-4">
                         <div v-for="record in subjectList" class="">
@@ -43,12 +43,11 @@
                 </div>
 
                 <!-- Faculties -->
-                <div class="w-full shadow-sm shadow-gray-500 rounded-lg p-3 m-2">
-                    <div class="flex text-xl font-medium px-2 items-center">
-                        <i class="fa-solid fa-graduation-cap p-2"></i>
-                        <p class="p-2">Faculties</p>
+                <div class="w-full shadow-sm shadow-gray-500 rounded-lg p-1 m-2">
+                    <div class="flex font-medium px-2 items-center">
+                        <i class="fa-solid fa-graduation-cap p-1"></i>
+                        <p class="p-1">Faculties</p>
                     </div>
-                    <p class="text-xl font-medium px-2"></p>
                     <div class="m-4">
                         <div v-for="record in facultyList" class="">
                             <Faculties :record="record"></Faculties>
@@ -124,10 +123,10 @@ export default {
             })
         },
         subjectList() {
-            return _.uniqBy(this.timetable, ob => ob.subjectInfos ? .subId)
+            return _.uniqBy(this.timetable, ob => ob.subjectInfos ?.subId)
         },
         facultyList() {
-            return _.uniqBy(this.timetable, ob => ob.facultyInfos ? .empId)
+            return _.uniqBy(this.timetable, ob => ob.facultyInfos ?.empId)
         },
     }
 }

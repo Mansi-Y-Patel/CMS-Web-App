@@ -1,5 +1,5 @@
 <template>
-<div class="w-full bg-gray-50 dark:bg-gray-900">
+<div class="w-full dark:bg-gray-900">
     <Nav />
 
     <div class="flex">
@@ -24,10 +24,10 @@
                     <div class="flex flex-col gap-2 m-2 text-black">
                         <div class="flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
                             <div class="p-1 w-2/3 mx-4 ">
-                                <p class="">Ongoing</p>
-                                <!-- {{  new Date() }} -->
-                                <p class="font-bold text-xl my-3">Mobile application development</p>
-                                <p class="font-bold">Lab</p>
+                                <p class="mb-4">Ongoing</p>
+                                <p class="font-bold text-md">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <p class="font-bold text-md">{{currTTrecord.ttLoadType}}</p>
+                                <p class="font-bold text-md"><i class="fa-solid fa-location-dot text-sm mr-2"></i>{{currTTrecord.locationInfos?.locName}}</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
@@ -35,9 +35,10 @@
                         </div>
                         <div class="flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
                             <div class="p-1 w-2/3 mx-4">
-                                <p class="">Upcoming</p>
-                                <p class="font-bold text-xl my-3"></p>
-                                <p class="font-bold"></p>
+                                <p class="mb-4">Upcoming</p>
+                                <p class="font-bold text-md">{{nextTTrecord.subjectInfos?.subName ?? "No Upcoming lecture/lab"}}</p>
+                                <p class="font-bold text-md">{{nextTTrecord.ttLoadType}}</p>
+                                <p class="font-bold text-md"><i class="fa-solid fa-location-dot text-sm mr-2"></i>{{nextTTrecord.locationInfos?.locName}}</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
@@ -133,6 +134,8 @@ export default {
             student:[],
             attendance: [],
             timetable: [],
+            currTTrecord: {},
+            nextTTrecord: {},
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         }
     },
@@ -215,15 +218,41 @@ export default {
             })
 
         console.log(list[0].timetableRecordInfos)
-        console.log(list[0].timetableRecordInfos[0])
+        
         this.timetable = list[0].timetableRecordInfos
 
 
-        console.log(this.dayNameList[new Date().getUTCDay() - 1])
-        console.log(new Date().getHours() % 12)
-        console.log(new Date().getMinutes()) 
-
+        const currDay = this.dayNameList[new Date().getUTCDay() - 1]
+        const currHour = new Date().getHours() % 12
+        const currMinute = new Date().getMinutes()
         
+        this.currTTrecord= _.find(this.timetable,ob => {
+            const ttString1 = ob.ttEndTime.split(":")
+            // console.log(ttString1)
+            const ttString = ob.ttStartTime.split(":")
+            // console.log(ttString)
+            const ttHour = parseInt(ttString[0])
+            const ttMinute = parseInt(ttString[1])
+            const ttHour1 = parseInt(ttString1[0])
+            const ttMinute1 = parseInt(ttString1[1])
+            const ttStartDuration = ttHour*3600+ttMinute*60
+            const ttEndDuration = ttHour1*3600+ttMinute1*60
+            const currDuration = currHour*3600+currMinute*60
+            return (currDay==ob.ttDay)&&(currDuration >= ttStartDuration && currDuration <= ttEndDuration)
+        })
+        this.nextTTrecord= _.find(this.timetable,ob => {
+            const ttString1 = this.currTTrecord.ttEndTime.split(":")
+            const ttString = ob.ttStartTime.split(":")
+            const ttHour = parseInt(ttString[0])
+            const ttMinute = parseInt(ttString[1])
+            const ttHour1 = parseInt(ttString1[0])
+            const ttMinute1 = parseInt(ttString1[1])
+            const ttStartDuration = ttHour*3600+ttMinute*60
+            
+            const ttEndDuration = ttHour1*3600+ttMinute1*60
+            console.log("-------------------",ttEndDuration,ttStartDuration)
+            return (currDay==ob.ttDay)&&(ttEndDuration <= ttStartDuration )
+        })   
     }
     },
     

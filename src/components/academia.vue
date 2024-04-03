@@ -93,8 +93,6 @@ export default {
                 this.subjects.push(ob.subjectInfos)
             })
 
-            
-
             // this.subjects.forEach((record) => {
             //     console.log(record.subName)
             // })

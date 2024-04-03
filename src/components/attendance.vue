@@ -55,22 +55,17 @@ export default {
             subjects: [],
             present: [],
             chartData: [
-                ['Subject', 'Present', 'Absent', {
+                ['Subject', 'Present',{
                     role: 'annotation'
-                }]
+                }, 'Absent']
             ],
             chartDatap: [
-                ['Subject', 'Present', 'Absent', {
+                ['Subject', 'Present',{
                     role: 'annotation'
-                }]
+                }, 'Absent']
             ],
             chartOptions: {
-                series: {
-                    0: {
-                        borderRadius: 60
-                    },
-                },
-                height: 300,
+                height: 280,
                 responsive: true,
                 // isStacked: true,
                 isStacked: 'percent',
@@ -79,7 +74,6 @@ export default {
                     top: 10,
                     bottom: 40,
                 },
-                // width_units: '%',
                 colors: ['#1c64f2', 'B4D4FF'],
                 vAxis: {
                     gridlines: {
@@ -87,11 +81,7 @@ export default {
                     },
                     baselineColor: "transparent",
                     textPosition: "none",
-                    // borderRadius: 50,
                 },
-                // series: {
-                //     borderRadius: 20,
-                // },
                 hAxis: {
                     textStyle: {
                         fontSize: '12',
@@ -131,7 +121,12 @@ export default {
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0
 
-                this.chartData.push([subject.subAlias, presentcount, absentcount, presentcount + absentcount])
+                if ((presentcount + absentcount) != 0) {
+                this.chartData.push([subject.subAlias, presentcount,((presentcount*100)/(presentcount + absentcount)).toFixed(0)+"%", absentcount])
+                }
+                else {
+                    this.chartData.push([subject.subAlias, presentcount,"0%", absentcount]) 
+                }
                 // console.log(this.chartData)
             }
         },
@@ -167,7 +162,7 @@ export default {
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
 
-                this.chartDatap.push([subject.subAlias, presentcountp, absentcountp, presentcountp + absentcountp])
+                this.chartDatap.push([subject.subAlias, presentcountp,((presentcountp*100)/(presentcountp + absentcountp)).toFixed(0)+"%", absentcountp])
                 // console.log(this.chartDatap)
             }
         },

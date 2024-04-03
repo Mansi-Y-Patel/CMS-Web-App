@@ -104,21 +104,21 @@ export default {
             subjects: [],
             refbook: [],
             chartData: [
-                ['Subject', 'Present', 'Absent', {
+                ['Subject', 'Present',{
                     role: 'annotation'
-                }]
+                }, 'Absent']
             ],
             chartDatap: [
-                ['Subject', 'Present', 'Absent', {
+                ['Subject', 'Present',{
                     role: 'annotation'
-                }]
+                }, 'Absent']
             ],
             chartOptions: {
                 height: 300,
                 responsive: true,
                 isStacked: 'percent',
                 chartArea: {
-                    left: 50,
+                    left: 30,
                     top: 10,
                     bottom: 40,
                 },
@@ -133,14 +133,6 @@ export default {
                 vAxis: {
                     textPosition: "none",
                 },
-                // annotations: {
-                //     boxStyle: {
-                //         rx: 80,
-                //         ry: 80,
-                //     }
-                // },
-
-                
             }
         }
     },
@@ -176,7 +168,7 @@ export default {
                 const absentcount = this.present.false ?? 0
                 console.log(presentcount)
 
-                this.chartData.push([subject.subAlias, presentcount, absentcount, presentcount + absentcount])
+                this.chartData.push([subject.subAlias, presentcount,((presentcount*100)/(presentcount + absentcount)).toFixed(0)+"%", absentcount])
                 // console.log(this.chartData)
             }
         },
@@ -211,7 +203,7 @@ export default {
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
 
-                this.chartDatap.push([subject.subAlias, presentcountp, absentcountp, presentcountp + absentcountp])
+                this.chartDatap.push([subject.subAlias, presentcountp,((presentcountp*100)/(presentcountp + absentcountp)).toFixed(0)+"%", absentcountp])
                 // console.log(this.chartDatap)
             }
         },
