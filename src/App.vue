@@ -9,14 +9,9 @@
   <script>
   import Header from './components/header.vue'
   export default {
-    //names starting with capital letter
       name: 'App',
       components: {
           Header,
       }
   }
   </script>
-  
-  <style>
-
-  </style>

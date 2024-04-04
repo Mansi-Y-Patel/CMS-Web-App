@@ -65,7 +65,9 @@ export default {
                     localStorage.setItem("email", this.email)
                     localStorage.setItem("userid", response.data.userId)
                     localStorage.setItem("stuid",this.stuid)
-                    localStorage.setItem("fcurrSem",this.fcurrSem)
+                    // localStorage.setItem("fcurrSem",this.fcurrSem)
+                    // localStorage.setItem("stuEnroll",this.stuEnroll)
+                    console.log(this.stuEnroll)
                     this.$router.push({
                         path: '/dashboard'
                     })

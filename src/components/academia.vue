@@ -71,9 +71,7 @@ export default {
 
         const student = await util.fetchstuInfo()
         console.log(student.stuId)
-        // let result = await axios.get(`/SubjectInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
 
-        
         let currayid = await util.fetchacademicyear()
         // currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
@@ -92,18 +90,6 @@ export default {
             subjectlist.map(ob => {
                 this.subjects.push(ob.subjectInfos)
             })
-
-            // this.subjects.forEach((record) => {
-            //     console.log(record.subName)
-            // })
-           
-
-        // let result = await axios.get(`/TimeTableInfos/getSubjectListByClassId/${academicyear}/5?access_token=ieBMCTyDaJQvsLHc7Ai6RI1atkh1RAqsO9OK0XwUX5rHjwDKG25BX3G7YLbMd9JA`);
-        // let att = await axios.get(`/StudentAttendanceInfos/count?where=%7B%22stuId%22%3A3981%2C%20%22ttSem%22%3A7%2C%20%22fSubjectId%22%3A1037%2C%20%22ttLoadType%22%3A%22Theory%22%2C%20%22attPresent%22%3A1%7D&access_token=ERHEJwTC6ARGHPkltZiIkL5xxMgqHFWTJ7Kwj8Gu25I23wD0J9JbyxWBQn4uaw05`);
-        
-        // this.subject.subjectList.forEach((record) => {
-        //     console.log(record.subId)
-        // })
     },
 }
 </script>

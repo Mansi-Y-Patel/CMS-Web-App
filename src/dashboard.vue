@@ -4,11 +4,10 @@
 
     <div class="flex">
         <Aside />
-        <main class="w-full p-4 bg-white md:ml-52 h-auto pt-16">
+        <main class="w-full p-4 bg-white md:ml-52 pt-16">
             <div class=" lg:grid lg:grid-cols-2  gap-1 m-0 w-full">
                 <div class="w-full">
-
-                    <div class="flex gap-2 m-2 rounded-lg">
+                    <div class="h-1/5 flex gap-2 m-2 rounded-lg">
 
                         <!-- Name -->
                         <div class="text-lg items-center  w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg">Welcome<br><span class="font-bold">{{ student1.stuFirstname }} {{ student1.stuLastname }}</span> </div>
@@ -21,42 +20,40 @@
                     </div>
 
                     <!-- Ongoing and upcomimg lectures -->
-                    <div class="flex flex-col gap-2 m-2 text-black">
-                        <div class="flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
-                            <div class="p-1 w-2/3 mx-4 ">
+                    <div class="h-4/5 flex flex-col gap-2 m-2 text-black">
+
+                        <!-- Ongoing -->
+                        <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
+                            <div class="p-1 w-2/3 mx-4 text-lg">
                                 <p class="mb-4">Ongoing</p>
-                                <p class="font-bold text-md">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <p class="font-bold text-md ">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
                                 <p class="font-bold text-md">{{currTTrecord.ttLoadType}}</p>
-                                <p class="font-bold text-md"><i class="fa-solid fa-location-dot text-sm mr-2"></i>{{currTTrecord.locationInfos?.locName}}</p>
+                                <p class="font-bold text-md"><i v-if="currTTrecord.subjectInfos?.subName" class="fa-solid fa-location-dot text-sm mr-2"></i>{{currTTrecord.locationInfos?.locName}}</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
                             </div>
                         </div>
-                        <div class="flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
-                            <div class="p-1 w-2/3 mx-4">
+
+                        <!-- Upcoming -->
+                        <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
+                            <div class="p-1 w-2/3 mx-4 text-lg">
                                 <p class="mb-4">Upcoming</p>
                                 <p class="font-bold text-md">{{nextTTrecord.subjectInfos?.subName ?? "No Upcoming lecture/lab"}}</p>
                                 <p class="font-bold text-md">{{nextTTrecord.ttLoadType}}</p>
-                                <p class="font-bold text-md"><i class="fa-solid fa-location-dot text-sm mr-2"></i>{{nextTTrecord.locationInfos?.locName}}</p>
+                                <p class="font-bold text-md"><i v-if="nextTTrecord.subjectInfos?.subName" class="fa-solid fa-location-dot text-sm mr-2"></i>{{nextTTrecord.locationInfos?.locName}}</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
                             </div>
                         </div>
                     </div>
-
-                    <!-- Announcements -->
-                    <div class="m-2 p-3 rounded-lg shadow-md shadow-gray-400">
-                        <p class="text-medium font-bold">Announcements:</p>
-                        <p></p>
-                        <p></p>
-                    </div>
                 </div>
+                
                 <div class="w-full">
 
                     <!-- Calendar -->
-                    <div class="rounded-lg shadow-md shadow-gray-400 m-2">
+                    <div class="h-2/3 rounded-lg shadow-md shadow-gray-400 m-2">
                         <div class="p-2">
                             <div class="header">
                                 <button @click="prevMonth" class="month-button hover:bg-gray-100 hover:rounded-full hover:text-blue-600 w-6"><i class="fa-solid fa-chevron-left"></i></button>
@@ -74,26 +71,55 @@
                         </div>
                     </div>
 
-                    <!-- To-do list -->
-                    <div class="p-3 m-2 rounded-lg shadow-md shadow-gray-400">
-                        <p class="text-medium font-bold">To-Do</p>
-                        <!-- <h1 class="text-medium font-bold">To-Do List</h1>
-                        <div class="flex mb-10">
-                            <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="flex flex-1 p-2 mr-2 border-1 rounded-sm border-gray-500">
-                            <button @click="addNote" class="add-button bg-blue-700 rounded-lg text-white w-full p-1">Add</button>
-                        </div>
-                        <div v-if="notes.length === 0" class="text-center p-2">{{ noNotesMessage }}</div>
-                        <div v-else class="border-1 rounded-sm max-h-2 overflow-y-auto">
+                    <!-- Announcements -->
+                    <div class="h-1/3 m-2 p-3 rounded-lg shadow-md shadow-gray-400">
+                        <p class="text-medium font-bold">Announcements:</p>
+                    </div>                    
+                </div>
+            </div>
+
+            <!-- To-do list -->
+            <div class="mt-6">
+                <div class="p-4 m-2 rounded-lg shadow-md shadow-gray-400">
+                    <div class="grid lg:grid-flow-col">
+                        <p class="text-lg font-bold p-2">To-Do List</p>
+                        <input placeholder="Add a new note" class="p-2 rounded-lg border border-gray-500">
+                        <button class="mx-3 p-2 bg-blue-700 rounded-lg text-white">Add</button>
+                    </div>
+                    <div class="grid lg:grid-flow-col lg:grid-cols-2">
+                        <div class="rounded-sm p-4">
                             <ul>
-                                <li v-for="(note, index) in notes" :key="index" class="flex items-center p-2 border-b border-gray-800">
-                                    <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
-                                    <span :class="{ completed: note.completed }">{{ note.text }}</span>
-                                    <button @click="editNote(index)" class="edit-button">Edit</button>
-                                    <button @click="deleteNote(index)" class="delete-button">Delete</button>
+                                <li class="flex items-center p-2">
+                                    <input type="checkbox" class="mr-2">
+                                    <span>Note</span>
+                                    <button class="mx-4 bg-blue-700 rounded-lg text-white p-1 w-16">Edit</button>
+                                    <button class="bg-blue-700 rounded-lg text-white p-1 w-16">Delete</button>
+                                </li>
+                                <li class="flex items-center p-2">
+                                    <input type="checkbox" class="mr-2">
+                                    <span>Note</span>
+                                    <button class="mx-4 bg-blue-700 rounded-lg text-white p-1 w-16">Edit</button>
+                                    <button class="bg-blue-700 rounded-lg text-white p-1 w-16">Delete</button>
                                 </li>
                             </ul>
-                        </div> -->
+                        </div>
                     </div>
+                    <!-- 
+                    <div class="flex mb-10">
+                        <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="flex flex-1 p-2 mr-2 border-1 rounded-sm border-gray-500">
+                        <button @click="addNote" class="add-button bg-blue-700 rounded-lg text-white w-full p-1">Add</button>
+                    </div>
+                    <div v-if="notes.length === 0" class="text-center p-2">{{ noNotesMessage }}</div>
+                    <div v-else class="border-1 rounded-sm max-h-2 overflow-y-auto">
+                        <ul>
+                            <li v-for="(note, index) in notes" :key="index" class="flex items-center p-2 border-b border-gray-800">
+                                <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
+                                <span :class="{ completed: note.completed }">{{ note.text }}</span>
+                                <button @click="editNote(index)" class="edit-button">Edit</button>
+                                <button @click="deleteNote(index)" class="delete-button">Delete</button>
+                            </li>
+                        </ul>
+                    </div> -->
                 </div>
             </div>
         </main>
@@ -104,7 +130,6 @@
 <script>
 import 'flowbite';
 import _ from 'lodash'
-import moment from 'moment';
 import axios from './axios.js';
 import util from './util.js';
 import Aside from './components/aside.vue';
@@ -116,9 +141,6 @@ import {
 import {
     GChart
 } from 'vue-google-charts';
-import {
-    size
-} from 'lodash';
 
 export default {
     name: 'Dashboard',
@@ -142,7 +164,7 @@ export default {
     methods: {
         drawchart() {
             this.chartData = [
-                    ['Effort', 'Amount given'],
+                    ['', ''],
                     ['Absent', 1],
                     ['Attended', 4]
                 ],
@@ -169,7 +191,41 @@ export default {
                     },
                     backgroundColor: "transparent",
                 }
-        }
+        },
+
+        async fetchAtt(token, subject) {
+            // console.log(subject)
+            let inputob = {
+                inputOb: {
+                    "loadDetail": {
+                        "ayId": 10,
+                        "ttLoadType": "Theory",
+                        "fSubjectId": 880
+                    },
+                    "stuEnroll": "200410107059"
+                }
+            }
+
+            let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId?access_token=${token}`, inputob)
+            // console.log(attd)
+            let attendance
+            if (attd.status == 200) {
+                // console.log(attd.data.attndList)
+                attendance = _.filter(attd.data.attndList.ddClassSchedules, record => {
+                    return record.attndanceInfos.length > 0
+                })
+                this.present = _.countBy(attendance, record => {
+                    return record.attndanceInfos[0].attPresent == 1
+                })
+                const presentcount = this.present.true ?? 0
+                const absentcount = this.present.false ?? 0
+
+                if ((presentcount + absentcount) != 0) {
+                this.chartData.push([presentcount, absentcount])
+                }
+                console.log(this.chartData)
+            }
+        },
     },
     async mounted() {
         this.drawchart()
@@ -200,6 +256,7 @@ export default {
             this.student1 = result.data[0]
         console.log(this.student1)
 
+        // TO-DO
         // let result2 = await axios.get(`/Todo/Todo_find/${localStorage.getItem('userid')}&access_token=${token}`);
         // if (result2.status == 200)
         // this.todolist = result2.data[0]
@@ -207,9 +264,7 @@ export default {
 
         // Timetable info
         let currayid = await util.fetchacademicyear()
-
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
-        
         let timetable
         if (result3.status == 200){
                 timetable = result3.data
@@ -217,20 +272,17 @@ export default {
                 return record.timetableRecordInfos.length > 0
             })
 
-        console.log(list[0].timetableRecordInfos)
-        
+        // console.log(list[0].timetableRecordInfos)
         this.timetable = list[0].timetableRecordInfos
-
 
         const currDay = this.dayNameList[new Date().getUTCDay() - 1]
         const currHour = new Date().getHours() % 12
         const currMinute = new Date().getMinutes()
         
+        // for Ongoing lecture/lab
         this.currTTrecord= _.find(this.timetable,ob => {
-            const ttString1 = ob.ttEndTime.split(":")
-            // console.log(ttString1)
             const ttString = ob.ttStartTime.split(":")
-            // console.log(ttString)
+            const ttString1 = ob.ttEndTime.split(":")
             const ttHour = parseInt(ttString[0])
             const ttMinute = parseInt(ttString[1])
             const ttHour1 = parseInt(ttString1[0])
@@ -240,19 +292,25 @@ export default {
             const currDuration = currHour*3600+currMinute*60
             return (currDay==ob.ttDay)&&(currDuration >= ttStartDuration && currDuration <= ttEndDuration)
         })
-        this.nextTTrecord= _.find(this.timetable,ob => {
+
+        // for Upcoming lecture/lab
+        this.nextTTrecord= _.filter(this.timetable,ob => {
             const ttString1 = this.currTTrecord.ttEndTime.split(":")
+            console.log(ttString1)
             const ttString = ob.ttStartTime.split(":")
             const ttHour = parseInt(ttString[0])
             const ttMinute = parseInt(ttString[1])
             const ttHour1 = parseInt(ttString1[0])
             const ttMinute1 = parseInt(ttString1[1])
             const ttStartDuration = ttHour*3600+ttMinute*60
-            
             const ttEndDuration = ttHour1*3600+ttMinute1*60
             console.log("-------------------",ttEndDuration,ttStartDuration)
             return (currDay==ob.ttDay)&&(ttEndDuration <= ttStartDuration )
-        })   
+        })  
+        this.nextTTrecord.forEach(element => {
+            console.log(element.subjectInfos.subName)
+            
+        }); 
     }
     },
     

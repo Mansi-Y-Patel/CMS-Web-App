@@ -107,20 +107,31 @@ export default {
             const list = _.filter(timetable.ttRecordList, record => {
                 return record.timetableRecordInfos.length > 0
             })
-            console.log(list[0].timetableRecordInfos)
-            console.log(list[0].timetableRecordInfos[0])
+            // console.log(list[0].timetableRecordInfos)
+            // console.log(list[0].timetableRecordInfos[0])
             this.timetable = list[0].timetableRecordInfos
+            // console.log(_.groupBy(this.timetable,ob => {
+            //     return ob.ttDay
+            // }))
         }
     },
     computed: {
         timetableByDay() {
 
-            return dayName => _.filter(this.timetable, ob => {
-                const [hours, minutes, seconds] = ob.ttStartTime.split(':');
-                const totalSeconds = (+hours) * 60 * 60 + (+minutes) * 60 + (+seconds);
-                console.log("---", totalSeconds, ob.ttStartTime)
-                return ob.ttDay == dayName
-            })
+            return dayName =>{
+                const temp = _.filter(this.timetable, ob => {
+                    return ob.ttDay == dayName
+                })
+
+                console.log(temp)
+                return temp
+                // return _.sortBy(temp,ob => {
+                //     console.log(ob)
+                //     const [hours, minutes, seconds] = ob.ttStartTime.split(':');
+                //     const totalSeconds = ((hours>=12 && hours<7)?hours+12:hours) * 60 * 60 + (minutes) * 60 + (seconds);
+                //     return totalSeconds
+                // })
+            } 
         },
         subjectList() {
             return _.uniqBy(this.timetable, ob => ob.subjectInfos ?.subId)

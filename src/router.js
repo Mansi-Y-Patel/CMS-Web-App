@@ -40,7 +40,6 @@ console.log(routes)
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireauth)) {
         if (localStorage.getItem("token") && localStorage.getItem("token") != null) {
-            // console.log(localStorage.getItem("token"))
             next()
             return
         }

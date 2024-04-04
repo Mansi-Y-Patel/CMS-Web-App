@@ -6,6 +6,8 @@
         <p class="text-2xl font-bold px-4">Attendance</p>
 
         <div class="lg:flex w-full mt-4 gap-3">
+            
+            <!-- Theory Attendance -->
             <div class="p-1 m-1 shadow-md shadow-gray-400 rounded-lg w-full">
                 <p class="text-lg font-semibold p-3">Theory</p>
                 <div class="" v-if="chartData && chartData.length>1">
@@ -14,6 +16,7 @@
                 <div class="p-3" v-else>Loading...</div>
             </div>
 
+            <!-- Practical Attendance -->
             <div class="p-1 m-1 shadow-md shadow-gray-400 rounded-lg w-full">
                 <p class="text-lg font-semibold p-3">Practical</p>
                 <div class="" v-if="chartDatap && chartDatap.length>1">
@@ -22,11 +25,6 @@
                 <div class="p-3" v-else>Loading...</div>
             </div>
         </div>
-
-        <!-- <div class="" v-if="chartData[1]">
-            {{ chartData[1][0] }}
-            <progress :max="chartData[1][1]+chartData[1][3]" :value="chartData[1][1]">
-        </progress></div> -->
     </main>
 </div>
 </template>
@@ -130,7 +128,6 @@ export default {
                 // console.log(this.chartData)
             }
         },
-        // drawchart() {},
 
         // for practical
         async fetchAttp(token, subject) {
@@ -157,21 +154,20 @@ export default {
                 this.presentp = _.countBy(attendancep, record => {
                     return record.attndanceInfos[0].attPresent == 1
                 })
-                // console.log(this.presentp)
-                // console.log(subject.subAlias, this.presentp)
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
 
+                if ((presentcountp + absentcountp) != 0) {
                 this.chartDatap.push([subject.subAlias, presentcountp,((presentcountp*100)/(presentcountp + absentcountp)).toFixed(0)+"%", absentcountp])
-                // console.log(this.chartDatap)
+                }
+                else {
+                    this.chartDatap.push([subject.subAlias, presentcountp,"0%", absentcountp]) 
+                }
             }
         },
-        // drawchart() {}
     },
 
     async mounted() {
-        // this.drawchart()
-
         const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
 
