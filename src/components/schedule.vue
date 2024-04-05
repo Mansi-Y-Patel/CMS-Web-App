@@ -117,20 +117,20 @@ export default {
     },
     computed: {
         timetableByDay() {
-
             return dayName =>{
                 const temp = _.filter(this.timetable, ob => {
                     return ob.ttDay == dayName
                 })
 
-                console.log(temp)
-                return temp
-                // return _.sortBy(temp,ob => {
-                //     console.log(ob)
-                //     const [hours, minutes, seconds] = ob.ttStartTime.split(':');
-                //     const totalSeconds = ((hours>=12 && hours<7)?hours+12:hours) * 60 * 60 + (minutes) * 60 + (seconds);
-                //     return totalSeconds
-                // })
+                return _.sortBy(temp,ob => {
+                    console.log(ob)
+                    const [hours, minutes, seconds] = ob.ttStartTime.split(':');
+                    const hours1= parseInt(hours) 
+                    const minutes1= parseInt(minutes) 
+                    const totalSeconds = ((hours1>=1 && hours1<7)?(hours1+12):hours1) * 3600 + (minutes1) * 60;
+                    console.log(hours1,totalSeconds)
+                    return totalSeconds
+                })
             } 
         },
         subjectList() {

@@ -5,8 +5,10 @@
     <div class="flex">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
+            {{ currTTrecord.subjectInfos?.subName }}<br>
+            {{nextTTrecord}}
             <div class=" lg:grid lg:grid-cols-2  gap-1 m-0 w-full">
-                <div class="w-full">
+                <div class="w-full h-full">
                     <div class="h-1/5 flex gap-2 m-2 rounded-lg">
 
                         <!-- Name -->
@@ -23,12 +25,12 @@
                     <div class="h-4/5 flex flex-col gap-2 m-2 text-black">
 
                         <!-- Ongoing -->
-                        <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
-                            <div class="p-1 w-2/3 mx-4 text-lg">
-                                <p class="mb-4">Ongoing</p>
-                                <p class="font-bold text-md ">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
-                                <p class="font-bold text-md">{{currTTrecord.ttLoadType}}</p>
-                                <p class="font-bold text-md"><i v-if="currTTrecord.subjectInfos?.subName" class="fa-solid fa-location-dot text-sm mr-2"></i>{{currTTrecord.locationInfos?.locName}}</p>
+                        <div class="h-1/2  flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
+                            <div class="p-1 w-2/3 mx-4 ">
+                                <p class="mb-2">Ongoing</p>
+                                <p class="font-bold text-lg">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <p class="my-2" v-if="currTTrecord.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{currTTrecord.facultyInfos.firstName}} {{currTTrecord.facultyInfos.lastName}}</p>
+                                <p class="" v-if="currTTrecord.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{currTTrecord.locationInfos?.locName}} ({{currTTrecord.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
@@ -39,9 +41,9 @@
                         <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
                             <div class="p-1 w-2/3 mx-4 text-lg">
                                 <p class="mb-4">Upcoming</p>
-                                <p class="font-bold text-md">{{nextTTrecord.subjectInfos?.subName ?? "No Upcoming lecture/lab"}}</p>
-                                <p class="font-bold text-md">{{nextTTrecord.ttLoadType}}</p>
-                                <p class="font-bold text-md"><i v-if="nextTTrecord.subjectInfos?.subName" class="fa-solid fa-location-dot text-sm mr-2"></i>{{nextTTrecord.locationInfos?.locName}}</p>
+                                <p class="font-bold text-lg">{{nextTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <!-- <p class="my-2" v-if="this.nextTTrecord.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{nextTTrecord.facultyInfos.firstName}} {{nextTTrecord.facultyInfos.lastName}}</p>
+                                <p class="" v-if="nextTTrecord.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{nextTTrecord.locationInfos?.locName}} ({{nextTTrecord.ttLoadType}})</p> -->
                             </div>
                             <div class="p-1 w-1/3 mx-4">
                                 <GChart type="PieChart" :data="chartData" :options="chartOptions" class="" />
@@ -49,11 +51,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="w-full">
+
+                <div class="w-full h-full">
 
                     <!-- Calendar -->
-                    <div class="h-2/3 rounded-lg shadow-md shadow-gray-400 m-2">
+                    <div class="items-center h-2/3 rounded-lg shadow-md shadow-gray-400 m-2">
                         <div class="p-2">
                             <div class="header">
                                 <button @click="prevMonth" class="month-button hover:bg-gray-100 hover:rounded-full hover:text-blue-600 w-6"><i class="fa-solid fa-chevron-left"></i></button>
@@ -72,54 +74,42 @@
                     </div>
 
                     <!-- Announcements -->
-                    <div class="h-1/3 m-2 p-3 rounded-lg shadow-md shadow-gray-400">
+                    <div class="h-1/3 m-2 p-3 rounded-lg shadow-md shadow-gray-400 object-cover">
                         <p class="text-medium font-bold">Announcements:</p>
-                    </div>                    
+                        <div class="overflow-y-scroll h-4/5 p-1">
+                            <p>fees</p>
+                            <p>fees</p>
+                            <p>fees</p>
+                            <!-- <p>fees</p>
+                            <p>fees</p>
+                            <p>fees</p> -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- To-do list -->
             <div class="mt-6">
                 <div class="p-4 m-2 rounded-lg shadow-md shadow-gray-400">
-                    <div class="grid lg:grid-flow-col">
+                    <div class="grid lg:grid-cols-2 gap-2 w-full">
                         <p class="text-lg font-bold p-2">To-Do List</p>
-                        <input placeholder="Add a new note" class="p-2 rounded-lg border border-gray-500">
-                        <button class="mx-3 p-2 bg-blue-700 rounded-lg text-white">Add</button>
-                    </div>
-                    <div class="grid lg:grid-flow-col lg:grid-cols-2">
-                        <div class="rounded-sm p-4">
-                            <ul>
-                                <li class="flex items-center p-2">
-                                    <input type="checkbox" class="mr-2">
-                                    <span>Note</span>
-                                    <button class="mx-4 bg-blue-700 rounded-lg text-white p-1 w-16">Edit</button>
-                                    <button class="bg-blue-700 rounded-lg text-white p-1 w-16">Delete</button>
-                                </li>
-                                <li class="flex items-center p-2">
-                                    <input type="checkbox" class="mr-2">
-                                    <span>Note</span>
-                                    <button class="mx-4 bg-blue-700 rounded-lg text-white p-1 w-16">Edit</button>
-                                    <button class="bg-blue-700 rounded-lg text-white p-1 w-16">Delete</button>
-                                </li>
-                            </ul>
+                        <div class="grid lg:grid-cols-2 gap-2 ml-2">
+                            <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="p-2 rounded-lg border border-gray-500">
+                            <button @click="addNote" class="p-2 bg-blue-600 rounded-lg text-white hover:bg-blue-700 hover:font-semibold">Add</button>
                         </div>
+                        
                     </div>
-                    <!-- 
-                    <div class="flex mb-10">
-                        <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="flex flex-1 p-2 mr-2 border-1 rounded-sm border-gray-500">
-                        <button @click="addNote" class="add-button bg-blue-700 rounded-lg text-white w-full p-1">Add</button>
-                    </div>
-                    <div v-if="notes.length === 0" class="text-center p-2">{{ noNotesMessage }}</div>
-                    <div v-else class="border-1 rounded-sm max-h-2 overflow-y-auto">
-                        <ul>
-                            <li v-for="(note, index) in notes" :key="index" class="flex items-center p-2 border-b border-gray-800">
+                    <div v-if="notes.length === 0" class="no-notes">{{ noNotesMessage }}</div>
+                    <div v-else class="rounded-sm p-5">
+                        <ul class="grid lg:grid-cols-2 gap-3">
+                            <li v-for="(note, index) in notes" :key="index" class="items-center p-1">
                                 <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
                                 <span :class="{ completed: note.completed }">{{ note.text }}</span>
-                                <button @click="editNote(index)" class="edit-button">Edit</button>
-                                <button @click="deleteNote(index)" class="delete-button">Delete</button>
+                                <button @click="editNote(index)" class="mx-4 w-16 bg-gray-800 rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Edit</button>
+                                <button @click="deleteNote(index)" class="w-16 bg-gray-800	rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Delete</button>
                             </li>
                         </ul>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </main>
@@ -135,7 +125,12 @@ import util from './util.js';
 import Aside from './components/aside.vue';
 import Nav from './components/nav.vue';
 import {
+    watchEffect
+} from 'vue';
+import {
     ref,
+} from 'vue';
+import {
     computed
 } from 'vue';
 import {
@@ -149,19 +144,89 @@ export default {
         Nav,
         GChart
     },
+    setup() {
+        const notes = ref(JSON.parse(localStorage.getItem('notes')) || []);
+        const newNote = ref('');
+        const showAddForm = ref(false);
+        const noNotesMessage = 'No To-Do\'s created. Create one now by pressing the add button above.';
+
+        watchEffect(() => {
+            localStorage.setItem('notes', JSON.stringify(notes.value));
+        });
+
+        const addNote = () => {
+            if (newNote.value.trim() === '') return;
+            notes.value.push({
+                text: newNote.value,
+                completed: false
+            });
+            newNote.value = '';
+        };
+
+        const deleteNote = index => {
+            notes.value.splice(index, 1);
+        };
+
+        const editNote = index => {
+            const newText = prompt('Enter new text:', notes.value[index].text);
+            if (newText !== null) {
+                notes.value[index].text = newText;
+            }
+        };
+
+        const saveNotes = () => {
+            // Triggered by watchEffect
+        };
+
+        return {
+            notes,
+            newNote,
+            showAddForm,
+            noNotesMessage,
+            addNote,
+            deleteNote,
+            editNote,
+            saveNotes,
+        };
+    },
     data() {
         return {
             student1: [],
             todolist: [],
-            student:[],
+            student: [],
             attendance: [],
             timetable: [],
             currTTrecord: {},
             nextTTrecord: {},
-            dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
-        }
+            dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
+            notes: [
+            { text: 'Example note 1', completed: false },
+            { text: 'Example note 2', completed: true },
+            ],
+            newNote: '',
+        };
     },
     methods: {
+        addNote() {
+            if (this.newNote.trim() === '') return;
+            this.notes.push({
+                text: this.newNote,
+                completed: false
+            });
+            this.newNote = '';
+        },
+        deleteNote(index) {
+            this.notes.splice(index, 1);
+        },
+        editNote(index) {
+            const newText = prompt('Enter new text:');
+            if (newText !== null) {
+                this.notes[index].text = newText;
+            }
+        },
+        toggleCompleted(index) {
+            this.notes[index].completed = !this.notes[index].completed;
+        },
         drawchart() {
             this.chartData = [
                     ['', ''],
@@ -170,8 +235,8 @@ export default {
                 ],
                 this.chartOptions = {
                     pieHole: 0.3,
-                    width: 145,
-                    height: 145,
+                    width: 140,
+                    height: 140,
                     pieSliceTextStyle: {
                         color: 'white',
                         bold: 'true',
@@ -221,7 +286,7 @@ export default {
                 const absentcount = this.present.false ?? 0
 
                 if ((presentcount + absentcount) != 0) {
-                this.chartData.push([presentcount, absentcount])
+                    this.chartData.push([presentcount, absentcount])
                 }
                 console.log(this.chartData)
             }
@@ -254,7 +319,7 @@ export default {
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
         if (result.status == 200)
             this.student1 = result.data[0]
-        console.log(this.student1)
+        // console.log(this.student1)
 
         // TO-DO
         // let result2 = await axios.get(`/Todo/Todo_find/${localStorage.getItem('userid')}&access_token=${token}`);
@@ -266,54 +331,52 @@ export default {
         let currayid = await util.fetchacademicyear()
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
         let timetable
-        if (result3.status == 200){
-                timetable = result3.data
+        if (result3.status == 200) {
+            timetable = result3.data
             const list = _.filter(timetable.ttRecordList, record => {
                 return record.timetableRecordInfos.length > 0
             })
 
-        // console.log(list[0].timetableRecordInfos)
-        this.timetable = list[0].timetableRecordInfos
+            // console.log(list[0].timetableRecordInfos)
+            this.timetable = list[0].timetableRecordInfos
 
-        const currDay = this.dayNameList[new Date().getUTCDay() - 1]
-        const currHour = new Date().getHours() % 12
-        const currMinute = new Date().getMinutes()
-        
-        // for Ongoing lecture/lab
-        this.currTTrecord= _.find(this.timetable,ob => {
-            const ttString = ob.ttStartTime.split(":")
-            const ttString1 = ob.ttEndTime.split(":")
-            const ttHour = parseInt(ttString[0])
-            const ttMinute = parseInt(ttString[1])
-            const ttHour1 = parseInt(ttString1[0])
-            const ttMinute1 = parseInt(ttString1[1])
-            const ttStartDuration = ttHour*3600+ttMinute*60
-            const ttEndDuration = ttHour1*3600+ttMinute1*60
-            const currDuration = currHour*3600+currMinute*60
-            return (currDay==ob.ttDay)&&(currDuration >= ttStartDuration && currDuration <= ttEndDuration)
-        })
+            const currDay = this.dayNameList[new Date().getUTCDay() - 1]
+            const currHour = new Date().getHours() % 12
+            const currMinute = new Date().getMinutes()
 
-        // for Upcoming lecture/lab
-        this.nextTTrecord= _.filter(this.timetable,ob => {
-            const ttString1 = this.currTTrecord.ttEndTime.split(":")
-            console.log(ttString1)
-            const ttString = ob.ttStartTime.split(":")
-            const ttHour = parseInt(ttString[0])
-            const ttMinute = parseInt(ttString[1])
-            const ttHour1 = parseInt(ttString1[0])
-            const ttMinute1 = parseInt(ttString1[1])
-            const ttStartDuration = ttHour*3600+ttMinute*60
-            const ttEndDuration = ttHour1*3600+ttMinute1*60
-            console.log("-------------------",ttEndDuration,ttStartDuration)
-            return (currDay==ob.ttDay)&&(ttEndDuration <= ttStartDuration )
-        })  
-        this.nextTTrecord.forEach(element => {
-            console.log(element.subjectInfos.subName)
-            
-        }); 
-    }
+            // for Ongoing lecture/lab
+            this.currTTrecord = _.find(this.timetable, ob => {
+                const ttString = ob.ttStartTime.split(":")
+                const ttString1 = ob.ttEndTime.split(":")
+                const ttHour = parseInt(ttString[0])
+                const ttMinute = parseInt(ttString[1])
+                const ttHour1 = parseInt(ttString1[0])
+                const ttMinute1 = parseInt(ttString1[1])
+                const ttStartDuration = ttHour * 3600 + ttMinute * 60
+                const ttEndDuration = ttHour1 * 3600 + ttMinute1 * 60
+                const currDuration = currHour * 3600 + currMinute * 60
+                return (currDay == ob.ttDay) && (currDuration >= ttStartDuration && currDuration <= ttEndDuration)
+            })
+
+            // for Upcoming lecture/lab
+            this.nextTTrecord = _.filter(this.timetable, ob => {
+                const ttString1 = this.currTTrecord.ttEndTime.split(":")
+                const ttString = ob.ttStartTime.split(":")
+                const ttHour = parseInt(ttString[0])
+                const ttMinute = parseInt(ttString[1])
+                const ttHour1 = parseInt(ttString1[0])
+                const ttMinute1 = parseInt(ttString1[1])
+                const ttStartDuration = ((ttHour>=1 && ttHour<7)?(ttHour+12):ttHour) * 3600 + ttMinute * 60
+                const ttEndDuration = ((ttHour1>=1 && ttHour1<7)?(ttHour1+12):ttHour1) * 3600 + ttMinute1 * 60 
+                return (currDay == ob.ttDay) && (ttEndDuration <= ttStartDuration)
+            })
+            console.log(this.nextTTrecord.subjectInfos?.subName)
+            this.nextTTrecord.forEach(element => {
+                console.log(element.subjectInfos.subName)
+            });
+        }
     },
-    
+
     setup() {
         const currentDate = new Date();
         const currentYear = ref(currentDate.getFullYear());

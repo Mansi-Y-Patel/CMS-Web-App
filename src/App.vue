@@ -1,10 +1,9 @@
 <template>
   <!-- <Header /> -->
-  <div class="container mx-auto">
+  <div class="container">
     <router-view></router-view>
   </div>
-  
-  </template>
+</template>
   
   <script>
   import Header from './components/header.vue'
