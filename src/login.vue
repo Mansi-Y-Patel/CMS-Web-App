@@ -1,6 +1,6 @@
 <template>
 <div class="lg:my-12">
-    <div class="flex flex-col justify-center md:flex-row sm:flex-row ">
+    <div class="flex flex-col justify-center sm:flex-row ">
 
         <!-- Login page: left section -->
         <div class="bg-blue-600 p-20 shadow-lg text-white">

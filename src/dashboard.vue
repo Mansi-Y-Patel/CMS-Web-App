@@ -5,8 +5,8 @@
     <div class="flex">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
-            {{ currTTrecord.subjectInfos?.subName }}<br>
-            {{nextTTrecord}}
+            <!-- {{ currTTrecord.subjectInfos?.subName }}<br> -->
+            <!-- {{nextTTrecord[0]}} -->
             <div class=" lg:grid lg:grid-cols-2  gap-1 m-0 w-full">
                 <div class="w-full h-full">
                     <div class="h-1/5 flex gap-2 m-2 rounded-lg">
@@ -99,14 +99,16 @@
                         </div>
                         
                     </div>
-                    <div v-if="notes.length === 0" class="no-notes">{{ noNotesMessage }}</div>
+                    <div v-if="notes.length === 0" class="p-3">{{ noNotesMessage }}</div>
                     <div v-else class="rounded-sm p-5">
                         <ul class="grid lg:grid-cols-2 gap-3">
                             <li v-for="(note, index) in notes" :key="index" class="items-center p-1">
                                 <input type="checkbox" v-model="note.completed" @change="saveNotes" class="mr-2">
-                                <span :class="{ completed: note.completed }">{{ note.text }}</span>
-                                <button @click="editNote(index)" class="mx-4 w-16 bg-gray-800 rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Edit</button>
-                                <button @click="deleteNote(index)" class="w-16 bg-gray-800	rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Delete</button>
+                                <span :class="{ completed: note.completed }" class="text-wrap">{{ note.text }}</span>
+                                <div class="float-right">
+                                    <button @click="editNote(index)" class="mx-4 w-16 bg-gray-800 rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Edit</button>
+                                    <button @click="deleteNote(index)" class="w-16 bg-gray-800	rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Delete</button>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -148,7 +150,7 @@ export default {
         const notes = ref(JSON.parse(localStorage.getItem('notes')) || []);
         const newNote = ref('');
         const showAddForm = ref(false);
-        const noNotesMessage = 'No To-Do\'s created. Create one now by pressing the add button above.';
+        // const noNotesMessage = 'No To-Do\'s created.';
 
         watchEffect(() => {
             localStorage.setItem('notes', JSON.stringify(notes.value));
@@ -198,10 +200,11 @@ export default {
             timetable: [],
             currTTrecord: {},
             nextTTrecord: {},
+            noNotesMessage: "No To-Do\'s created.",
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
             notes: [
-            { text: 'Example note 1', completed: false },
-            { text: 'Example note 2', completed: true },
+            // { text: 'Example note 1', completed: false },
+            // { text: 'Example note 2', completed: true },
             ],
             newNote: '',
         };
@@ -376,7 +379,6 @@ export default {
             });
         }
     },
-
     setup() {
         const currentDate = new Date();
         const currentYear = ref(currentDate.getFullYear());
@@ -523,4 +525,8 @@ export default {
 .current {
     font-weight: bold;
 }
+
+.completed {
+    text-decoration: line-through;
+  }
 </style>

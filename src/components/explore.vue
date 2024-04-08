@@ -94,7 +94,7 @@
                 <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">Spandan</h2>
                     <p class="text-black font-medium mb-3">College Level Sports Festival</p>
-                    <p class="text-black mb-1">Students from all the departments compete with each other in various sports including Cricket, Football, Volleball and many more.</p>
+                    <p class="text-black mb-1">Students from all the departments compete with each other in various sports including Cricket, Football, Volleyball and many more.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <img class="w-full rounded-lg" src="../images/spandan.jpg">
