@@ -27,7 +27,7 @@ export default {
         let student = JSON.parse(localStorage.getItem("studentinfo"))
         if (!student) {
 
-            let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
+            let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
             if (result.status == 200) {
 
                 student = result.data[0]

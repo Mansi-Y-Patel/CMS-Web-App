@@ -95,15 +95,15 @@ export default {
             let inputob = {
                 inputOb: {
                     "loadDetail": {
-                        "ayId": 10,
+                        "ayId": this.currayid,
                         "ttLoadType": "Theory",
                         "fSubjectId": subject.subId
                     },
-                    "stuEnroll": "200410107059"
+                    "stuEnroll": "210410107066"
                 }
             }
 
-            let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId?access_token=${token}`, inputob)
+            let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputob)
             // console.log(attd)
             let attendance
             if (attd.status == 200) {
@@ -135,15 +135,15 @@ export default {
             let inputobp = {
                 inputOb: {
                     "loadDetail": {
-                        "ayId": 10,
+                        "ayId": this.currayid,
                         "ttLoadType": "Practical",
                         "fSubjectId": subject.subId
                     },
-                    "stuEnroll": "200410107059"
+                    "stuEnroll": "210410107066"
                 }
             }
 
-            let attdp = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId?access_token=${token}`, inputobp)
+            let attdp = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputobp)
             // console.log(attdp)
             let attendancep
             if (attdp.status == 200) {
@@ -178,7 +178,7 @@ export default {
         console.log(student.stuId)
 
         const currayid = await util.fetchacademicyear()
-        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
+        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}`)
         let timetable
         if (result3.status == 200)
             timetable = result3.data

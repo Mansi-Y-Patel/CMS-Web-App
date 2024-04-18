@@ -1,5 +1,5 @@
 <template>
-<div class="lg:my-12">
+<div class="lg:my-12" >
     <div class="flex flex-col justify-center sm:flex-row ">
 
         <!-- Login page: left section -->
@@ -11,7 +11,7 @@
         </div>
 
         <!-- Login page: right section -->
-        <div class="p-20 shadow-lg ">
+        <div class="p-20 shadow-lg bg-white">
             <p class="mb-5">Enter your account details:</p>
 
             <form @submit.prevent="login" class="">
@@ -64,9 +64,8 @@ export default {
                     localStorage.setItem("token", JSON.stringify(response.data.id))
                     localStorage.setItem("email", this.email)
                     localStorage.setItem("userid", response.data.userId)
-                    localStorage.setItem("stuid",this.stuid)
-                    // localStorage.setItem("fcurrSem",this.fcurrSem)
-                    // localStorage.setItem("stuEnroll",this.stuEnroll)
+                    localStorage.setItem("fcurrSem",this.fcurrSem)
+                    localStorage.setItem("stuEnroll",this.stuEnroll)
                     console.log(this.stuEnroll)
                     this.$router.push({
                         path: '/dashboard'

@@ -48,7 +48,7 @@ export default {
         const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
 
-        let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
+        let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
             this.student = result.data[0]
         console.log(this.student)

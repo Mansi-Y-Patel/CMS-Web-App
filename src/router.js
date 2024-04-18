@@ -18,25 +18,24 @@ const routes = [
     //     { 
     //       path: '/dashboard/schedule', component: Schedule  }
     //   ]
-    { path: '/dashboard', component: Dashboard, meta: { requireauth: true },  },
     { path: '/login', component: Login, meta: { requireauth: false } },
     { path: '/', component: Login, meta: { requireauth: false } },
+    { path: '/dashboard', component: Dashboard, meta: { requireauth: true },  },
+    { path: '/dashboard/schedule', component: Schedule, meta: { requireauth: true } },
     { path: '/academia', component: Academia, meta: { requireauth: true } },
+    { path: '/academia/subjectinfo/:id?', component: SubjectInfo, meta: { requireauth: true } },
+    { path: '/academia/attendance', component: Attendance, meta: { requireauth: true } },  
     { path: '/explore', component: Explore, meta: { requireauth: true } },
     { path: '/circulars', component: Circulars, meta: { requireauth: true } },
     { path: '/profile', component: Profile, meta: { requireauth: true } },
-    { path: '/schedule', component: Schedule, meta: { requireauth: true } },
-    { path: '/subjectinfo/:id?', component: SubjectInfo, meta: { requireauth: true } },
-    { path: '/attendance', component: Attendance, meta: { requireauth: true } },  
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    // linkActiveClass: 'vue-active-link',
 });
 
-console.log(routes)
+// console.log(routes)
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireauth)) {
         if (localStorage.getItem("token") && localStorage.getItem("token") != null) {

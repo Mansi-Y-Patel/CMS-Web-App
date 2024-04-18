@@ -3,11 +3,13 @@
 <div class="flex">
     <Aside />
     <main class="w-full px-4 bg-white md:ml-52 h-auto pt-20">
-        <div class="p-2 m-1 flex font-semibold text-3xl rounded-b-lg">
-            {{ $route.params.id? $route.params.id:"subject not found" }}
+        <div class="text-2xl font-bold px-4">
+            {{ subjectinfo?subjectinfo.subName:"subject not found" }}
         </div>
 
         <div class="lg:grid lg:grid-cols-2 mt-4">
+
+            <!-- Theory attendance -->
             <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Theory</p>
                 <div class="" v-if="chartData && chartData.length>1">
@@ -15,6 +17,8 @@
                 </div>
                 <div class="" v-else>Loading...</div>
             </div>
+            
+            <!-- Practical attendance -->
             <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Practical</p>
                 <div class="" v-if="chartDatap && chartDatap.length>1">
@@ -22,14 +26,19 @@
                 </div>
                 <div class="" v-else>Loading...</div>
             </div>
+
+            <!-- Lesson plan -->
             <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Lesson plan</p>
             </div>
+
+            <!-- Lab plan -->
             <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Lab plan</p>
             </div>
         </div>
 
+        <!-- Reference books -->
         <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
             <p class="text-lg font-semibold p-2">Reference Books</p>
             <div class="mx-5 my-2" v-for="books in refbook">
@@ -37,6 +46,7 @@
             </div>
         </div>
 
+        <!-- Google drive link -->
         <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
             <p class="text-lg font-semibold p-2">Google Drive Link</p>
             <div class="mx-5 my-2">
@@ -99,6 +109,7 @@ export default {
     },
     data() {
         return {
+            currayid: -1,
             subjectinfo: [],
             attendance: [],
             subjects: [],
@@ -114,13 +125,14 @@ export default {
                 }, 'Absent']
             ],
             chartOptions: {
-                height: 300,
+                height: 100,
                 responsive: true,
                 isStacked: 'percent',
                 chartArea: {
                     left: 30,
                     top: 10,
                     bottom: 40,
+                    right:100,
                 },
                 colors: ['#1c64f2', 'B4D4FF'],
                 hAxis: {
@@ -143,15 +155,15 @@ export default {
             let inputob = {
                 inputOb: {
                     "loadDetail": {
-                        "ayId": 9,
+                        "ayId": this.currayid,
                         "ttLoadType": "Theory",
-                        "fSubjectId": 880
+                        "fSubjectId": subject
                     },
-                    "stuEnroll": "200410107059"
+                    "stuEnroll": "210410107066"
                 }
             }
 
-            let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId?access_token=${token}`, inputob)
+            let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputob)
             // console.log(attd)
             let attendance
             if (attd.status == 200) {
@@ -168,7 +180,12 @@ export default {
                 const absentcount = this.present.false ?? 0
                 console.log(presentcount)
 
+                if ((presentcount + absentcount) != 0) {
                 this.chartData.push([subject.subAlias, presentcount,((presentcount*100)/(presentcount + absentcount)).toFixed(0)+"%", absentcount])
+                }
+                else {
+                    this.chartData.push([subject.subAlias, presentcount,"0%", absentcount]) 
+                }
                 // console.log(this.chartData)
             }
         },
@@ -179,15 +196,15 @@ export default {
             let inputobp = {
                 inputOb: {
                     "loadDetail": {
-                        "ayId": 9,
+                        "ayId": this.currayid,
                         "ttLoadType": "Practical",
-                        "fSubjectId": 880
+                        "fSubjectId": subject
                     },
-                    "stuEnroll": "200410107059"
+                    "stuEnroll": "210410107066"
                 }
             }
 
-            let attdp = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId?access_token=${token}`, inputobp)
+            let attdp = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputobp)
             // console.log(attdp)
             let attendancep
             if (attdp.status == 200) {
@@ -203,7 +220,12 @@ export default {
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
 
+                if ((presentcountp + absentcountp) != 0) {
                 this.chartDatap.push([subject.subAlias, presentcountp,((presentcountp*100)/(presentcountp + absentcountp)).toFixed(0)+"%", absentcountp])
+                }
+                else {
+                    this.chartDatap.push([subject.subAlias, presentcountp,"0%", absentcountp]) 
+                }
                 // console.log(this.chartDatap)
             }
         },
@@ -212,7 +234,7 @@ export default {
     async mounted() {
         let query = {
             where: {
-                subId: 1039
+                subId: this.$route.params.id
             }
         }
 
@@ -222,44 +244,22 @@ export default {
         const academicyear = await util.fetchacademicyear()
         console.log(academicyear)
 
-        const student = await util.fetchstuInfo()
-        console.log(student.stuId)
+        const rr = await axios.get(`/subjectInfos/${this.$route.params.id}`)
+        if (rr.status == 200)
+        this.subjectinfo = rr.data
 
-        const currayid = await util.fetchacademicyear()
-        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}?access_token=${token}`)
-        let timetable
-        if (result3.status == 200)
-            timetable = result3.data
-        const list = _.find(timetable.ttRecordList, record => {
-            // console.log(record)
-            return record.timetableRecordInfos.length > 0
-        })
-        // console.log(list)
-        const subjectlist = _.uniqBy(list.timetableRecordInfos, ob => {
-            // console.log(ob.subjectInfos.subName)
-            return ob.subjectInfos.subName
-        })
 
-        this.subjects = []
-        subjectlist.map(ob => {
-            this.subjects.push(ob.subjectInfos)
-        })
-        console.log(this.subjects)
 
-        this.subjects.forEach((record) => {
-            console.log(record.subId)
-        })
-        this.subjects.map((subject) => {
-            this.fetchAtt(token, subject)
-        })
-        this.subjects.map((subject) => {
-            this.fetchAttp(token, subject)
-        })
+        this.currayid = await util.fetchacademicyear()
+        
+        
 
-        let result = await axios.get(`LpIds?filter=${JSON.stringify(query)}&access_token=${token}
+            this.fetchAtt(token, this.$route.params.id)
+            this.fetchAttp(token, this.$route.params.id)
+
+        let result = await axios.get(`LpIds?filter=${JSON.stringify(query)}
         `);
         if (result.status == 200)
-            this.subjectinfo = result.data
         this.refbook = result.data[0].refBook.split('\n')
         // console.log(result.data[0].refBook.split('\n'))
     },

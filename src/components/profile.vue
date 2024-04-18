@@ -235,12 +235,12 @@ export default {
         axios.defaults.headers.common = {
             'Authorization': `Bearer ${token}`
         }
-        let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
+        let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
             this.student = result.data[0]
         console.log(this.student)
 
-        let result1 = await axios.get(`/DepartmentInfos?filter=${JSON.stringify(query)}&access_token=${token}`);
+        let result1 = await axios.get(`/DepartmentInfos?filter=${JSON.stringify(query)}`);
         if (result1.status == 200)
             this.dept = result1.data[0]
         console.log(this.dept)
