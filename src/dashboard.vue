@@ -5,6 +5,7 @@
     <div class="flex w-full">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
+            
             <!-- {{ currTTrecord.subjectInfos?.subName }}<br>
             <p v-for="a in nextTTrecord">{{a.subjectInfos.subName}}-{{a.ttLoadType}}</p> -->
             <div class=" lg:grid lg:grid-cols-2  gap-1 m-0 w-full">
@@ -27,12 +28,12 @@
                         <div class="h-1/2  flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
                             <div class="p-1 w-2/3 mx-4 ">
                                 <p class="mb-2">Ongoing</p>
-                                <p class="font-bold text-lg">{{currTTrecord.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
-                                <p class="my-2" v-if="currTTrecord.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{currTTrecord.facultyInfos.firstName}} {{currTTrecord.facultyInfos.lastName}}</p>
-                                <p class="" v-if="currTTrecord.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{currTTrecord.locationInfos?.locName}} ({{currTTrecord.ttLoadType}})</p>
+                                <p class="font-bold text-lg">{{currTTrecord?.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <p class="my-2" v-if="currTTrecord?.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{currTTrecord?.facultyInfos?.firstName}} {{currTTrecord?.facultyInfos?.lastName}}</p>
+                                <p class="" v-if="currTTrecord?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{currTTrecord.locationInfos?.locName}} ({{currTTrecord.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
-                                <!-- <p v-if="chartData">{{ chartData }}</p> -->
+                                <p v-if="chartData">{{ chartData }}</p>
                                 <GChart v-if="chartData && chartOptions" type="PieChart" :data="chartData" :options="chartOptions" />
                             </div>
                         </div>
@@ -42,10 +43,12 @@
                             <div class="p-1 w-2/3 mx-4">
                                 <p class="mb-2">Upcoming</p>
                                 <p class="font-bold text-lg">{{nextTTrecord[0]?.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
-                                <p class="my-2" v-if="this.nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{nextTTrecord[0]?.facultyInfos.firstName}} {{nextTTrecord[0]?.facultyInfos.lastName}}</p>
+                                <p class="my-2" v-if="this.nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{nextTTrecord[0]?.facultyInfos?.firstName}} {{nextTTrecord[0]?.facultyInfos?.lastName}}</p>
                                 <p class="" v-if="nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{nextTTrecord[0]?.locationInfos?.locName}} ({{nextTTrecord[0]?.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
+                                <p v-if="chartData">{{ chartDatap }}</p>
+                                <!-- <GChart v-if="chartData && chartOptions" type="PieChart" :data="chartData" :options="chartOptions" /> -->
                                 <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" class="" />
                             </div>
                         </div>
@@ -81,9 +84,6 @@
                             <p>Exam fees</p>
                             <p>College fees</p>
                             <p>Transportation fees</p>
-                            <!-- <p>Exam fees</p>
-                            <p>College fees</p>
-                            <p>Transportation fees</p> -->
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     </div>
 
                     <p v-if="todolist && todolist.length > 0">
-                        {{ todolist }}
+                        <!-- {{ todolist }} -->
                     </p>
                    
                     <div v-if="todolist.length === 0" class="p-3">{{ noNotesMessage }}</div>
@@ -204,7 +204,6 @@ export default {
             nextTTrecord: {},
             noNotesMessage: "No To-Do\'s created.",
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
-            // notes: [],
             newNote: '',
         };
     },
@@ -220,8 +219,6 @@ export default {
                 "todoContent": this.newNote,
                 "todoCompleted": 0,
                 "todoOwner": localStorage.getItem("userid"),
-                // "createdAt": new Date(),
-                // "updatedAt": new Date()
                 }
                 console.log(todoItem)
 
@@ -249,11 +246,7 @@ export default {
         // Donut chart
         drawchart() {
 
-                this.chartData = [
-                        ['', ''],
-                        ['Absent', 2],
-                        ['Attended', 8]
-                    ],
+                this.chartData = null
                 this.chartOptions = {
                     pieHole: 0.3,
                     width: 140,
@@ -264,7 +257,7 @@ export default {
                         fontSize: 10,
                     },
                     slices: [{
-                        color: 'black'
+                        color: '#6eb0ff'
                     }, {
                         color: '#1c64f2'
                     }],

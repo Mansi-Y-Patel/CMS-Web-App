@@ -4,7 +4,7 @@
     <Aside />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         <p class="text-2xl font-bold px-4 mb-5">Explore more about us!</p>
-        <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2 gap-3">
+        <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2 gap-6 m-2">
 
             <!-- Placement -->
             <div class="p-8 items-center  rounded-lg shadow-sm shadow-gray-700">
@@ -13,12 +13,12 @@
                     <p class="text-black font-medium mb-3">Explore the opportunities</p>
                     <p class="text-black mb-1">Hundreds of companies visiting every year in search of talented students.</p>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <!-- <div class="grid grid-cols-2 gap-4">
                     <img class="w-full rounded-lg" src="../images/placement/placement3.jpeg">
                     <img class="mt-4 w-full lg:mt-10 rounded-lg" src="../images/placement/Placement_cell1.jpeg">
-                </div>
+                </div> -->
 
-                <!-- <div id="gallery" class="relative w-full" data-carousel="slide">
+                <div id="gallery" class="relative w-full" data-carousel="slide">
                     <div class="relative h-56 overflow-hidden md:h-96">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
                             <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -52,7 +52,7 @@
                             <span class="sr-only">Next</span>
                         </span>
                     </button>
-                </div> -->
+                </div>
 
             </div>
 

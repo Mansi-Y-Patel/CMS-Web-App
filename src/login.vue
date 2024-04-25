@@ -27,7 +27,7 @@
                         <i class="fa-solid" :class="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
                     </button>
                 </div>
-                <p><a href="" class="text-sm font-medium text-blue-600 hover:font-bold">Forgot your Password?</a></p>
+                <!-- <p><a href="" class="text-sm font-medium text-blue-600 hover:font-bold">Forgot your Password?</a></p> -->
                 <button type="submit" class="mt-6 mb-5 bg-gray-800	rounded-2xl text-white w-full p-1 hover:bg-black hover:font-bold">Login</button>
             </form>
         </div>
@@ -53,8 +53,9 @@ export default {
         },
 
         async login() {
-            console.log(this.email, this.password)
             try {
+                // console.log(axios.defaults.baseURL, axios.defaults.headers.common.Authorization)
+                console.log(this.email, this.password)
                 const response = await axios.post('/UserAccounts/login', {
                     email: this.email,
                     password: this.password
@@ -62,11 +63,16 @@ export default {
                 })
                 if (response.status == 200) {
                     localStorage.setItem("token", JSON.stringify(response.data.id))
+                    if(response.data.id) {
+                            console.log(response.data.id)
+                            axios.defaults.headers.common.Authorization = `${response.data.id}`
+                        }
                     localStorage.setItem("email", this.email)
+
                     localStorage.setItem("userid", response.data.userId)
                     localStorage.setItem("fcurrSem",this.fcurrSem)
                     localStorage.setItem("stuEnroll",this.stuEnroll)
-                    console.log(this.stuEnroll)
+                    console.log(JSON.stringify(response.data.id))
                     this.$router.push({
                         path: '/dashboard'
                     })

@@ -3,6 +3,10 @@
 <div class="flex">
     <Aside />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
+        <div class="" v-if="loading">
+            <Spinner></Spinner>
+        </div>
+        
         <div class="flex text-2xl font-bold items-center justify-between">
             <p class="text-2xl font-bold px-4">Academia</p>
 
@@ -47,21 +51,27 @@ import axios from '../axios.js'
 import Aside from './aside.vue'
 import Nav from './nav.vue'
 import util from '../util.js'
+import Spinner from './spinner.vue'
+
 export default {
     name: 'Academia',
     components: {
         Aside,
         Nav,
+        Spinner
+
     },
     data() {
         return {
             attendance: [],
-            subjects: []
+            subjects: [],
+            loading: false,
         }
     },
     async mounted() {
-
-        const token = JSON.parse(localStorage.getItem('token'))
+        this.loading = true
+        try {
+            const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
 
         const academicyear = await util.fetchacademicyear()
@@ -88,6 +98,13 @@ export default {
             subjectlist.map(ob => {
                 this.subjects.push(ob.subjectInfos)
             })
+        }
+        catch(error) {
+            console.log("Error", error)
+        }
+        finally {
+            this.loading = false
+        }
     },
     methods: {
         navigateto(subject){

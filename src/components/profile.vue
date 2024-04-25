@@ -3,13 +3,18 @@
 <div class="flex">
     <Aside />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
+
+        <div class="" v-if="loading">
+            <Spinner></Spinner>
+        </div>
+
         <div class="flex text-2xl font-bold items-center justify-between">
             <p class="text-2xl font-bold px-4">Profile</p>
 
             <!-- Link to settings page -->
-            <a href="">
+            <!-- <a href="">
                 <i class="p-4 fa-solid fa-gear rounded-full hover:bg-gray-100 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"></i>
-            </a>
+            </a> -->
         </div>
 
         <div class="gap-3 px-4">
@@ -212,29 +217,34 @@ import 'flowbite';
 import axios from '../axios.js'
 import Aside from './aside.vue'
 import Nav from './nav.vue'
+import Spinner from './spinner.vue'
 export default {
     name: 'Profile',
     components: {
         Aside,
         Nav,
+        Spinner
     },
     data() {
         return {
             student: [],
             dept:[],
+            loading: false,
         }
     },
     async mounted() {
-        let query = {
+        this.loading = true
+        try {
+            let query = {
             where: {
                 stuEmail: localStorage.getItem("email")
             }
         }
         const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
-        axios.defaults.headers.common = {
-            'Authorization': `Bearer ${token}`
-        }
+        // axios.defaults.headers.common = {
+        //     'Authorization': `Bearer ${token}`
+        // }
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
             this.student = result.data[0]
@@ -244,6 +254,13 @@ export default {
         if (result1.status == 200)
             this.dept = result1.data[0]
         console.log(this.dept)
+        }
+        catch(error) {
+            console.log("Error", error)
+        }
+        finally {
+            this.loading = false
+        }
     },
 }
 </script>

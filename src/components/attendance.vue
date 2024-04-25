@@ -3,6 +3,7 @@
 <div class="flex">
     <Aside />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
+        
         <p class="text-2xl font-bold px-4">Attendance</p>
 
         <div class="lg:flex w-full mt-4 gap-3">
@@ -13,7 +14,13 @@
                 <div class="" v-if="chartData && chartData.length>1">
                     <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
                 </div>
-                <div class="p-3" v-else>Loading...</div>
+                <div class="p-3" v-else>
+                    <div class="opacity-75 z-50">
+                        <div class="flex justify-center items-center ">
+                            <div class="fas fa-spinner fa-spin fa-2x text-blue-700"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Practical Attendance -->
@@ -22,7 +29,13 @@
                 <div class="" v-if="chartDatap && chartDatap.length>1">
                     <GChart type="ColumnChart" :data="chartDatap" :options="chartOptions" />
                 </div>
-                <div class="p-3" v-else>Loading...</div>
+                <div class="p-3" v-else>
+                    <div class="opacity-75 z-50">
+                        <div class="flex justify-center items-center ">
+                            <div class="fas fa-spinner fa-spin fa-2x text-blue-700"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -39,13 +52,15 @@ import util from '../util.js'
 import {
     GChart
 } from 'vue-google-charts';
+import Spinner from './spinner.vue'
 
 export default {
     name: 'Attendance',
     components: {
         Aside,
         Nav,
-        GChart
+        GChart,
+        Spinner
     },
     data() {
         return {

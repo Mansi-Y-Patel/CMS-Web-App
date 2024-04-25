@@ -4,7 +4,12 @@
 
     <div class="flex">
         <Aside class="sidebar "/>
+
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
+
+            <div class="" v-if="loading">
+                <Spinner></Spinner>
+            </div>
 
             <div class="flex text-2xl font-bold items-center justify-between">
                 <p class="text-2xl font-bold px-4">Schedule</p>
@@ -71,6 +76,7 @@ import util from '../util.js'
 import TimeTableRecordInfo from './timetablerecord.vue';
 import Subjects from './subjects.vue'
 import Faculties from './faculties.vue'
+import Spinner from './spinner.vue'
 export default {
     name: 'Schedule',
     components: {
@@ -78,18 +84,22 @@ export default {
         TimeTableRecordInfo,
         Nav,
         Subjects,
-        Faculties
+        Faculties,
+        Spinner
     },
     data() {
         return {
             student: [],
             attendance: [],
             timetable: [],
+            loading: false,
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         }
     },
     async mounted() {
-        const token = JSON.parse(localStorage.getItem('token'))
+        this.loading = true
+        try{
+            const token = JSON.parse(localStorage.getItem('token'))
         console.log(token)
 
         const academicyear = await util.fetchacademicyear()
@@ -115,6 +125,13 @@ export default {
             //     return ob.ttDay
             // }))
         }
+    } 
+        catch(error) {
+            console.log("Error", error)
+        }
+        finally {
+            this.loading = false
+        }  
     },
     computed: {
         timetableByDay() {
@@ -138,7 +155,9 @@ export default {
             return _.uniqBy(this.timetable, ob => ob.subjectInfos ?.subId)
         },
         facultyList() {
+            console.log(this.timetable)
             return _.uniqBy(this.timetable, ob => ob.facultyInfos ?.empId)
+
         },
     },
     methods: {
