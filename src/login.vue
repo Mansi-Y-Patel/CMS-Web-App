@@ -3,7 +3,7 @@
     <div class="flex flex-col justify-center sm:flex-row ">
 
         <!-- Login page: left section -->
-        <div class="bg-blue-600 md:p-20 sm:p-10 shadow-lg text-white">
+        <div class="bg-blue-600 p-20 shadow-lg text-white">
             <img src="./images/logo1.png" class="size-20 mb-8">
             <h2 class="text-2xl font-bold">Welcome to</h2>
             <h1 class="text-2xl font-extrabold">SVIT, Vasad</h1>
@@ -11,7 +11,7 @@
         </div>
 
         <!-- Login page: right section -->
-        <div class="md:p-20 sm:p-10 shadow-lg bg-white">
+        <div class="p-20 shadow-lg bg-white">
             <p class="mb-5">Enter your account details:</p>
 
             <form @submit.prevent="login" class="">
