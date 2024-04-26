@@ -5,6 +5,8 @@
     <div class="flex w-full">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
+
+            <!-- Spinner -->
             <div class="" v-if="loading">
                 <Spinner></Spinner>
             </div>
@@ -34,7 +36,6 @@
                                 <p class="" v-if="currTTrecord?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{currTTrecord.locationInfos?.locName}} ({{currTTrecord.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
-                                <!-- <p v-if="chartData">{{ chartData }}</p> -->
                                 <GChart v-if="chartData && chartOptions" type="PieChart" :data="chartData" :options="chartOptions" />
                             </div>
                         </div>
@@ -52,8 +53,7 @@
                                 <p class="" v-if="nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{nextTTrecord[0]?.locationInfos?.locName}} ({{nextTTrecord[0]?.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
-                                <!-- <p v-if="chartData">{{ chartDatap }}</p> -->
-                                <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" class="" />
+                                <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" />
                             </div>
                         </div>
                     </div>
@@ -104,10 +104,6 @@
                         </div>
                         
                     </div>
-
-                    <p v-if="todolist && todolist.length > 0">
-                        <!-- {{ todolist }} -->
-                    </p>
                    
                     <div v-if="todolist.length === 0" class="p-3">{{ noNotesMessage }}</div>
                     <div v-else class="rounded-sm p-5">
@@ -165,7 +161,6 @@ export default {
         const notes = ref(JSON.parse(localStorage.getItem('notes')) || []);
         const newNote = ref('');
         const showAddForm = ref(false);
-        // const noNotesMessage = 'No To-Do\'s created.';
 
         watchEffect(() => {
             localStorage.setItem('notes', JSON.stringify(notes.value));
