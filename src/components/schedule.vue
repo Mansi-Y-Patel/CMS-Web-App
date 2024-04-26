@@ -6,8 +6,7 @@
         <Aside class="sidebar "/>
 
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
-
-            <div class="" v-if="loading">
+            <div v-if="loading">
                 <Spinner></Spinner>
             </div>
 
@@ -100,13 +99,8 @@ export default {
         this.loading = true
         try{
             const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token)
-
-        const academicyear = await util.fetchacademicyear()
-        console.log(academicyear)
-
-        const student = await util.fetchstuInfo()
-        console.log(student.stuId)
+            const academicyear = await util.fetchacademicyear()
+            const student = await util.fetchstuInfo()
 
         let currayid = await util.fetchacademicyear()
         // currayid=10-1
@@ -118,14 +112,9 @@ export default {
             const list = _.filter(timetable.ttRecordList, record => {
                 return record.timetableRecordInfos.length > 0
             })
-            // console.log(list[0].timetableRecordInfos)
-            // console.log(list[0].timetableRecordInfos[0])
             this.timetable = list[0].timetableRecordInfos
-            // console.log(_.groupBy(this.timetable,ob => {
-            //     return ob.ttDay
-            // }))
         }
-    } 
+        } 
         catch(error) {
             console.log("Error", error)
         }
@@ -141,12 +130,10 @@ export default {
                 })
 
                 return _.sortBy(temp,ob => {
-                    console.log(ob)
                     const [hours, minutes, seconds] = ob.ttStartTime.split(':');
                     const hours1= parseInt(hours) 
                     const minutes1= parseInt(minutes) 
                     const totalSeconds = ((hours1>=1 && hours1<7)?(hours1+12):hours1) * 3600 + (minutes1) * 60;
-                    console.log(hours1,totalSeconds)
                     return totalSeconds
                 })
             } 
@@ -157,7 +144,6 @@ export default {
         facultyList() {
             console.log(this.timetable)
             return _.uniqBy(this.timetable, ob => ob.facultyInfos ?.empId)
-
         },
     },
     methods: {

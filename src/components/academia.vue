@@ -59,7 +59,6 @@ export default {
         Aside,
         Nav,
         Spinner
-
     },
     data() {
         return {
@@ -72,43 +71,34 @@ export default {
         this.loading = true
         try {
             const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token)
+            const academicyear = await util.fetchacademicyear()
+            const student = await util.fetchstuInfo()
+            let currayid = await util.fetchacademicyear()
+            let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}`)
+            let timetable
+            if (result3.status == 200)
+                timetable = result3.data
+                const list = _.find(timetable.ttRecordList, record => {
+                    return record.timetableRecordInfos.length > 0
+                })
+                const subjectlist= _.uniqBy(list.timetableRecordInfos,ob => {
+                    return ob.subjectInfos.subName 
+                })
 
-        const academicyear = await util.fetchacademicyear()
-        console.log(academicyear)
-
-        const student = await util.fetchstuInfo()
-        console.log(student.stuId)
-
-        let currayid = await util.fetchacademicyear()
-        // currayid=10-1
-        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}`)
-        let timetable
-        if (result3.status == 200)
-            timetable = result3.data
-            const list = _.find(timetable.ttRecordList, record => {
-                return record.timetableRecordInfos.length > 0
-            })
-            const subjectlist= _.uniqBy(list.timetableRecordInfos,ob => {
-                // console.log(ob.subjectInfos.subName)
-                return ob.subjectInfos.subName 
-            })
-
-            this.subjects = []
-            subjectlist.map(ob => {
-                this.subjects.push(ob.subjectInfos)
-            })
-        }
-        catch(error) {
-            console.log("Error", error)
-        }
-        finally {
-            this.loading = false
-        }
+                this.subjects = []
+                subjectlist.map(ob => {
+                    this.subjects.push(ob.subjectInfos)
+                })
+            }
+            catch(error) {
+                console.log("Error", error)
+            }
+            finally {
+                this.loading = false
+            }
     },
     methods: {
         navigateto(subject){
-            // console.log(subject)
             this.$router.push(`/academia/subjectinfo/${subject.subId}`)
         }
     }

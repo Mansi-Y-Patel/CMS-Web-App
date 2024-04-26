@@ -52,7 +52,6 @@ import util from '../util.js'
 import {
     GChart
 } from 'vue-google-charts';
-import Spinner from './spinner.vue'
 
 export default {
     name: 'Attendance',
@@ -60,13 +59,13 @@ export default {
         Aside,
         Nav,
         GChart,
-        Spinner
     },
     data() {
         return {
             attendance: [],
             subjects: [],
             present: [],
+            student:[],
             chartData: [
                 ['Subject', 'Present',{
                     role: 'annotation'
@@ -106,7 +105,7 @@ export default {
     methods: {
         // for theory
         async fetchAtt(token, subject) {
-            // console.log(subject)
+            let student2 = await util.fetchstuInfo()
             let inputob = {
                 inputOb: {
                     "loadDetail": {
@@ -114,7 +113,7 @@ export default {
                         "ttLoadType": "Theory",
                         "fSubjectId": subject.subId
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": student2.stuEnroll
                 }
             }
 
@@ -129,8 +128,6 @@ export default {
                 this.present = _.countBy(attendance, record => {
                     return record.attndanceInfos[0].attPresent == 1
                 })
-                // console.log(this.present)
-                // console.log(subject.subAlias, this.present)
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0
 
@@ -140,13 +137,12 @@ export default {
                 else {
                     this.chartData.push([subject.subAlias, presentcount,"0%", absentcount]) 
                 }
-                // console.log(this.chartData)
             }
         },
 
         // for practical
         async fetchAttp(token, subject) {
-            // console.log(subject)
+            let student1 = await util.fetchstuInfo()
             let inputobp = {
                 inputOb: {
                     "loadDetail": {
@@ -154,15 +150,13 @@ export default {
                         "ttLoadType": "Practical",
                         "fSubjectId": subject.subId
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": student1.stuEnroll
                 }
             }
 
             let attdp = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputobp)
-            // console.log(attdp)
             let attendancep
             if (attdp.status == 200) {
-                // console.log(attdp.data.attndList)
                 attendancep = _.filter(attdp.data.attndList.ddClassSchedules, record => {
                     return record.attndanceInfos.length > 0
                 })
@@ -184,14 +178,8 @@ export default {
 
     async mounted() {
         const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token)
-
         const academicyear = await util.fetchacademicyear()
-        console.log(academicyear)
-
         const student = await util.fetchstuInfo()
-        console.log(student.stuId)
-
         const currayid = await util.fetchacademicyear()
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}`)
         let timetable

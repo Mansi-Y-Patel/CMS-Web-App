@@ -15,7 +15,13 @@
                 <div class="" v-if="chartData && chartData.length>1">
                     <GChart type="BarChart" :data="chartData" :options="chartOptions" />
                 </div>
-                <div class="" v-else>Loading...</div>
+                <div class="p-3" v-else>
+                    <div class="opacity-75 z-50">
+                        <div class="flex justify-center items-center ">
+                            <div class="fas fa-spinner fa-spin fa-2x text-blue-700"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Practical attendance -->
@@ -24,18 +30,24 @@
                 <div class="" v-if="chartDatap && chartDatap.length>1">
                     <GChart type="BarChart" :data="chartDatap" :options="chartOptions" />
                 </div>
-                <div class="" v-else>Loading...</div>
+                <div class="p-3" v-else>
+                    <div class="opacity-75 z-50">
+                        <div class="flex justify-center items-center ">
+                            <div class="fas fa-spinner fa-spin fa-2x text-blue-700"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Lesson plan -->
-            <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
+            <!-- <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Lesson plan</p>
-            </div>
+            </div> -->
 
             <!-- Lab plan -->
-            <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
+            <!-- <div class="p-4 m-1 shadow-md shadow-gray-400 rounded-lg">
                 <p class="text-lg font-semibold p-2">Lab plan</p>
-            </div>
+            </div> -->
         </div>
 
         <!-- Reference books -->
@@ -105,7 +117,7 @@ export default {
     components: {
         Aside,
         Nav,
-        GChart
+        GChart,
     },
     data() {
         return {
@@ -151,7 +163,7 @@ export default {
     methods: {
         // for theory
         async fetchAtt(token, subject) {
-            // console.log(subject)
+            let enroll = await util.fetchacademicyear()
             let inputob = {
                 inputOb: {
                     "loadDetail": {
@@ -159,7 +171,7 @@ export default {
                         "ttLoadType": "Theory",
                         "fSubjectId": subject
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": enroll.stuEnroll
                 }
             }
 
@@ -167,7 +179,6 @@ export default {
             // console.log(attd)
             let attendance
             if (attd.status == 200) {
-                // console.log(attd.data.attndList)
                 attendance = _.filter(attd.data.attndList.ddClassSchedules, record => {
                     return record.attndanceInfos.length > 0
                 })
@@ -175,7 +186,6 @@ export default {
                     return record.attndanceInfos[0].attPresent == 1
                 })
                 console.log(this.present)
-                // console.log(subject.subAlias, this.present)
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0
                 console.log(presentcount)
@@ -186,13 +196,12 @@ export default {
                 else {
                     this.chartData.push([subject.subAlias, presentcount,"0%", absentcount]) 
                 }
-                // console.log(this.chartData)
             }
         },
 
         // for practical
         async fetchAttp(token, subject) {
-            // console.log(subject)
+            let enroll2 = await util.fetchacademicyear()
             let inputobp = {
                 inputOb: {
                     "loadDetail": {
@@ -200,7 +209,7 @@ export default {
                         "ttLoadType": "Practical",
                         "fSubjectId": subject
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": enroll2.stuEnroll
                 }
             }
 
@@ -208,15 +217,12 @@ export default {
             // console.log(attdp)
             let attendancep
             if (attdp.status == 200) {
-                // console.log(attdp.data.attndList)
                 attendancep = _.filter(attdp.data.attndList.ddClassSchedules, record => {
                     return record.attndanceInfos.length > 0
                 })
                 this.presentp = _.countBy(attendancep, record => {
                     return record.attndanceInfos[0].attPresent == 1
                 })
-                // console.log(this.presentp)
-                // console.log(subject.subAlias, this.presentp)
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
 
@@ -239,23 +245,13 @@ export default {
         }
 
         const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token)
-
         const academicyear = await util.fetchacademicyear()
-        console.log(academicyear)
-
         const rr = await axios.get(`/subjectInfos/${this.$route.params.id}`)
         if (rr.status == 200)
         this.subjectinfo = rr.data
-
-
-
         this.currayid = await util.fetchacademicyear()
-        
-        
-
-            this.fetchAtt(token, this.$route.params.id)
-            this.fetchAttp(token, this.$route.params.id)
+        this.fetchAtt(token, this.$route.params.id)
+        this.fetchAttp(token, this.$route.params.id)
 
         let result = await axios.get(`LpIds?filter=${JSON.stringify(query)}
         `);

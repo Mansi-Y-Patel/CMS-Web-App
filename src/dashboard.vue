@@ -5,15 +5,16 @@
     <div class="flex w-full">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
+            <div class="" v-if="loading">
+                <Spinner></Spinner>
+            </div>
             
-            <!-- {{ currTTrecord.subjectInfos?.subName }}<br>
-            <p v-for="a in nextTTrecord">{{a.subjectInfos.subName}}-{{a.ttLoadType}}</p> -->
             <div class=" lg:grid lg:grid-cols-2  gap-1 m-0 w-full">
                 <div class="w-full h-full">
                     <div class="h-1/5 flex gap-2 m-2 rounded-lg">
 
                         <!-- Name -->
-                        <div class="text-lg items-center w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg">Welcome<br><span class="font-bold">{{ student1.stuFirstname }} {{ student1.stuLastname }}</span> </div>
+                        <div class="text-lg items-center w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg">Welcome<br><span class="font-bold">{{ student.stuFirstname }} {{ student.stuLastname }}</span> </div>
 
                         <!-- Link to Schedule page -->
                         <router-link to="/dashboard/schedule" :class="{ active: $route.path === '/dashboard/schedule' }" class="flex items-center text-lg font-semibold w-1/2 p-4 shadow-md shadow-gray-400 rounded-lg justify-around hover:bg-gray-100 hover:text-blue-600">
@@ -25,7 +26,7 @@
                     <div class="h-4/5 flex flex-col gap-2 m-2 text-black">
 
                         <!-- Ongoing -->
-                        <div class="h-1/2  flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
+                        <div v-if="currTTrecord" class="h-1/2  flex justify-between p-2 shadow-md shadow-gray-400  rounded-lg">
                             <div class="p-1 w-2/3 mx-4 ">
                                 <p class="mb-2">Ongoing</p>
                                 <p class="font-bold text-lg">{{currTTrecord?.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
@@ -33,22 +34,25 @@
                                 <p class="" v-if="currTTrecord?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{currTTrecord.locationInfos?.locName}} ({{currTTrecord.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
-                                <p v-if="chartData">{{ chartData }}</p>
+                                <!-- <p v-if="chartData">{{ chartData }}</p> -->
                                 <GChart v-if="chartData && chartOptions" type="PieChart" :data="chartData" :options="chartOptions" />
                             </div>
+                        </div>
+                        <div class="h-1/2 p-7 shadow-md shadow-gray-400 rounded-lg " v-else>
+                            <p class="mb-2">Ongoing</p>
+                            <p class="font-bold text-lg">Lunch Break or Record not found</p>
                         </div>
 
                         <!-- Upcoming -->
                         <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
                             <div class="p-1 w-2/3 mx-4">
                                 <p class="mb-2">Upcoming</p>
-                                <p class="font-bold text-lg">{{nextTTrecord[0]?.subjectInfos?.subName ?? "No Ongoing lecture/lab"}}</p>
+                                <p class="font-bold text-lg">{{nextTTrecord[0]?.subjectInfos?.subName ?? "No Upcoming lecture/lab"}}</p>
                                 <p class="my-2" v-if="this.nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-graduation-cap mr-2"></i>{{nextTTrecord[0]?.facultyInfos?.firstName}} {{nextTTrecord[0]?.facultyInfos?.lastName}}</p>
                                 <p class="" v-if="nextTTrecord[0]?.subjectInfos?.subName"><i class="fa-solid fa-location-dot text-sm mr-4"></i>{{nextTTrecord[0]?.locationInfos?.locName}} ({{nextTTrecord[0]?.ttLoadType}})</p>
                             </div>
                             <div class="p-1 w-1/3 mx-4">
-                                <p v-if="chartData">{{ chartDatap }}</p>
-                                <!-- <GChart v-if="chartData && chartOptions" type="PieChart" :data="chartData" :options="chartOptions" /> -->
+                                <!-- <p v-if="chartData">{{ chartDatap }}</p> -->
                                 <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" class="" />
                             </div>
                         </div>
@@ -109,11 +113,11 @@
                     <div v-else class="rounded-sm p-5">
                         <ul class="grid lg:grid-cols-2 gap-3">
                             <li v-for="task in todolist" class="items-center p-2 border border-gray-300 rounded-lg">
-                                <input type="checkbox" v-model="task.todoCompleted"  @change="saveNotes" class="mr-2">
+                                <input type="checkbox"  :checked="task.todoCompleted==1"  @change="(e)=>updateStatus(e.target.checked,task.todoId)" class="mr-2 " :class="{'line-through':task.todoCompleted==1 } ">
                                 <span :class="{ completed: task.todoCompleted }" class="text-wrap">{{ task.todoContent }}</span>
                                 <div class="float-right">
                                     <!-- <button @click="editNote(todoId)" class="mx-4 w-16 bg-gray-800 rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Edit</button> -->
-                                    <button @click="deleteNote(todoId)" class="w-16 bg-gray-800	rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Delete</button>
+                                    <button @click="deleteNote(task.todoId)" class="w-16 bg-gray-800	rounded-2xl text-white p-1 hover:bg-black hover:font-semibold">Delete</button>
                                 </div>
                             </li>
                         </ul>
@@ -132,6 +136,8 @@ import axios from './axios.js';
 import util from './util.js';
 import Aside from './components/aside.vue';
 import Nav from './components/nav.vue';
+import Spinner from './components/spinner.vue'
+
 import {
     watchEffect
 } from 'vue';
@@ -150,7 +156,8 @@ export default {
     components: {
         Aside,
         Nav,
-        GChart
+        GChart,
+        Spinner
     },
 
     // To-do list setup
@@ -163,23 +170,6 @@ export default {
         watchEffect(() => {
             localStorage.setItem('notes', JSON.stringify(notes.value));
         });
-
-        const addNote = () => {
-            if (newNote.value.trim() === '') return;
-            notes.value.push({
-                text: newNote.value,
-                completed: false
-            });
-            newNote.value = '';
-        };
-
-        const deleteNote = index => {
-            notes.value.splice(index, 1);
-        };
-
-        const saveNotes = () => {
-            // Triggered by watchEffect
-        };
 
         return {
             notes,
@@ -195,13 +185,14 @@ export default {
 
     data() {
         return {
-            student1: [],
-            todolist: [],
             student: [],
+            todolist: [],
             attendance: [],
             timetable: [],
             currTTrecord: {},
             nextTTrecord: {},
+            loading: false,
+
             noNotesMessage: "No To-Do\'s created.",
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
             newNote: '',
@@ -230,8 +221,29 @@ export default {
                 console.log(error)
             }
         },
-        deleteNote(index) {
-            this.notes.splice(index, 1);
+        async deleteNote(todoId) {
+            try {
+                await axios.delete(`/Todos/${todoId}`)
+                this.fetchTodo()
+            }
+            catch(error) {
+                console.log(error)
+            }
+        },
+        async updateStatus(status,todoId) {
+            console.log(status)
+            try {
+                    const todoItem =       {
+                "todoCompleted": status==true?1:0,
+                }
+                console.log(todoItem)
+
+                await axios.patch(`/Todos/${todoId}`,todoItem)
+                this.fetchTodo()
+            }
+            catch(error) {
+                console.log(error)
+            }
         },
         // editNote(index) {
         //     const newText = prompt('Enter new text:');
@@ -274,8 +286,11 @@ export default {
 
         // Fetching attendance of ongoing lecture
         async fetchAtt() {
+            
         console.log(this.currayid)
-
+            if (!this.currTTrecord) {
+                return
+            }
             let inputob = {
                 inputOb: {
                     "ayId": this.currayid,
@@ -283,7 +298,7 @@ export default {
                         "ttLoadType": this.currTTrecord.ttLoadType,
                         "fSubjectId": this.currTTrecord.fSubjectId
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": this.student.stuEnroll
                 }
             }
 
@@ -308,7 +323,6 @@ export default {
                     ['Attended', presentcount]
                 ]
                 }
-
                 console.log(this.chartData)
             }
         },
@@ -319,10 +333,10 @@ export default {
                 inputOb: {
                     "ayId": this.currayid,
                     "loadDetail": {
-                        "ttLoadType": this.nextTTrecord.ttLoadType,
-                        "fSubjectId": this.nextTTrecord.fSubjectId
+                        "ttLoadType": this.nextTTrecord[0].ttLoadType,
+                        "fSubjectId": this.nextTTrecord[0].fSubjectId
                     },
-                    "stuEnroll": "210410107066"
+                    "stuEnroll": this.student.stuEnroll
                 }
             }
 
@@ -360,40 +374,32 @@ export default {
             console.log(todourl)
             let result2 = await axios.get(todourl);
             if (result2.status == 200){
-
                 this.todolist = [...result2.data]
                 console.log(result2.data)
             }
-        
         }
     },
 
     async mounted() {
-
-        
-
+        this.loading=true
+        try {
         let query = {
             where: {
                 stuEmail: localStorage.getItem("email")
             }
         }
 
-        
         let academicyear = await util.fetchacademicyear()
-        console.log(academicyear)
+        this.student = await util.fetchstuInfo()
 
-        const student = await util.fetchstuInfo()
-        console.log(student.stuEnroll)
-
-        console.log(axios.defaults.headers.common)
         // Personal information of student
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
-            this.student1 = result.data[0]
+            this.student = result.data[0]
 
         // Timetable info
         this.currayid = await util.fetchacademicyear()
-        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${this.currayid}`)
+        let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${this.student.stuId}/${this.currayid}`)
         let timetable
         if (result3.status == 200) {
             timetable = result3.data
@@ -418,12 +424,19 @@ export default {
                 const ttStartDuration = ttHour * 3600 + ttMinute * 60
                 const ttEndDuration = ttHour1 * 3600 + ttMinute1 * 60
                 const currDuration = currHour * 3600 + currMinute * 60
+                console.log((currDay == ob.ttDay) && (currDuration >= ttStartDuration && currDuration <= ttEndDuration))
                 return (currDay == ob.ttDay) && (currDuration >= ttStartDuration && currDuration <= ttEndDuration)
             })
+            console.log(this.currTTrecord)
 
             // For Upcoming lecture/lab
+            let tempTime 
+            if (!this.currTTrecord) {
+                const tempDate =new Date()
+                tempTime =  `${tempDate.getHours()}:${tempDate.getMinutes()}` 
+            }
             const temp12 = _.filter(this.timetable, ob => {
-                const ttString1 = this.currTTrecord.ttEndTime.split(":")
+                const ttString1 = this.currTTrecord?this.currTTrecord.ttEndTime.split(":"):tempTime.split(":")
                 const ttString = ob.ttStartTime.split(":")
                 const ttHour = parseInt(ttString[0])
                 const ttMinute = parseInt(ttString[1])
@@ -450,21 +463,21 @@ export default {
             this.nextTTrecord.forEach(element => {
                 console.log(element.subjectInfos.subName)
             });
+        }    
         }
 
-            
-        }
         this.drawchart()
         await this.fetchAtt()
-        console.log(this.chartData)
-
         await this.fetchAttp()
-        console.log(this.chartDatap)
-
-        console.log("fetching...........")
         await this.fetchTodo()
 
-
+        }
+        catch(error){
+            console.log("Error",error)
+        }
+        finally {
+                this.loading = false
+            } 
     },
 
     // Calendar
@@ -472,9 +485,7 @@ export default {
         const currentDate = new Date();
         const currentYear = ref(currentDate.getFullYear());
         const currentMonthIndex = ref(currentDate.getMonth());
-
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
         const prevMonth = () => {
             if (currentMonthIndex.value === 0) {
                 currentYear.value--;
@@ -614,8 +625,4 @@ export default {
 .current {
     font-weight: bold;
 }
-
-.completed {
-    text-decoration: line-through;
-  }
 </style>
