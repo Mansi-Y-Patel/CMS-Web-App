@@ -118,10 +118,8 @@ export default {
             }
 
             let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputob)
-            // console.log(attd)
             let attendance
             if (attd.status == 200) {
-                // console.log(attd.data.attndList)
                 attendance = _.filter(attd.data.attndList.ddClassSchedules, record => {
                     return record.attndanceInfos.length > 0
                 })
@@ -130,7 +128,6 @@ export default {
                 })
                 const presentcount = this.present.true ?? 0
                 const absentcount = this.present.false ?? 0
-
                 if ((presentcount + absentcount) != 0) {
                 this.chartData.push([subject.subAlias, presentcount,((presentcount*100)/(presentcount + absentcount)).toFixed(0)+"%", absentcount])
                 }
@@ -165,7 +162,6 @@ export default {
                 })
                 const presentcountp = this.presentp.true ?? 0
                 const absentcountp = this.presentp.false ?? 0
-
                 if ((presentcountp + absentcountp) != 0) {
                 this.chartDatap.push([subject.subAlias, presentcountp,((presentcountp*100)/(presentcountp + absentcountp)).toFixed(0)+"%", absentcountp])
                 }
@@ -186,19 +182,14 @@ export default {
         if (result3.status == 200)
             timetable = result3.data
         const list = _.find(timetable.ttRecordList, record => {
-            // console.log(record)
             return record.timetableRecordInfos.length > 0
         })
-        // console.log(list)
         const subjectlist = _.uniqBy(list.timetableRecordInfos, ob => {
-            // console.log(ob.subjectInfos.subName)
             return ob.subjectInfos.subName
         })
-
         this.subjects = []
         subjectlist.map(ob => {
             this.subjects.push(ob.subjectInfos)
-
         })
         this.subjects.map((subject) => {
             this.fetchAtt(token, subject)

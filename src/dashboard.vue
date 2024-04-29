@@ -5,8 +5,6 @@
     <div class="flex w-full">
         <Aside />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
-
-            <!-- Spinner -->
             <div class="" v-if="loading">
                 <Spinner></Spinner>
             </div>
@@ -41,11 +39,11 @@
                         </div>
                         <div class="h-1/2 p-7 shadow-md shadow-gray-400 rounded-lg " v-else>
                             <p class="mb-2">Ongoing</p>
-                            <p class="font-bold text-lg">Lunch Break or Record not found</p>
+                            <p class="font-bold text-lg w-1/2">No Ongoing lecture/lab</p>
                         </div>
 
                         <!-- Upcoming -->
-                        <div class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
+                        <div v-if="nextTTrecord" class="h-1/2 flex justify-between p-2 shadow-md shadow-gray-400 rounded-lg">
                             <div class="p-1 w-2/3 mx-4">
                                 <p class="mb-2">Upcoming</p>
                                 <p class="font-bold text-lg">{{nextTTrecord[0]?.subjectInfos?.subName ?? "No Upcoming lecture/lab"}}</p>
@@ -56,6 +54,10 @@
                                 <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" />
                             </div>
                         </div>
+                        <!-- <div v-else class="h-1/2 p-7 shadow-md shadow-gray-400 rounded-lg ">
+                            <p class="mb-2">Upcoming</p>
+                            <p class="font-bold text-lg">No Upcoming lecture/lab</p>
+                        </div> -->
                     </div>
                 </div>
 
@@ -82,9 +84,8 @@
 
                     <!-- Announcements -->
                     <div class="h-1/3 m-2 p-3 rounded-lg shadow-md shadow-gray-400 object-cover">
-                        <p class="text-medium font-bold">Announcements:</p>
+                        <p class="text-lg font-bold">Announcements:</p>
                         <div class="p-1">
-                            <!-- overflow-scroll  -->
                             <p>Exam fees</p>
                             <p>College fees</p>
                             <p>Transportation fees</p>
@@ -102,7 +103,6 @@
                             <input v-model="newNote" @keyup.enter="addNote" placeholder="Add a new note" class="p-2 rounded-lg border border-gray-500">
                             <button @click="addNote" class="p-2 bg-blue-600 rounded-lg text-white hover:bg-blue-700 hover:font-semibold">Add</button>
                         </div>
-                        
                     </div>
                    
                     <div v-if="todolist.length === 0" class="p-3">{{ noNotesMessage }}</div>
@@ -206,8 +206,6 @@ export default {
                 "todoCompleted": 0,
                 "todoOwner": localStorage.getItem("userid"),
                 }
-                console.log(todoItem)
-
                 await axios.post(`/Todos`,todoItem)
                 this.fetchTodo()
                 this.newNote = '';
@@ -231,8 +229,6 @@ export default {
                     const todoItem =       {
                 "todoCompleted": status==true?1:0,
                 }
-                console.log(todoItem)
-
                 await axios.patch(`/Todos/${todoId}`,todoItem)
                 this.fetchTodo()
             }
@@ -279,10 +275,23 @@ export default {
                 }
         },
 
+        async fetchTodo() {
+            let query1 = {
+            where: {
+                todoOwner: localStorage.getItem("userid")
+            }
+            }
+            // Fetch TO-DO stored in API
+            let todourl = `/Todos?filter=${JSON.stringify(query1)}`
+            let result2 = await axios.get(todourl);
+            if (result2.status == 200){
+                this.todolist = [...result2.data]
+            }
+        },
+
         // Fetching attendance of ongoing lecture
         async fetchAtt() {
             
-        console.log(this.currayid)
             if (!this.currTTrecord) {
                 return
             }
@@ -297,7 +306,6 @@ export default {
                 }
             }
 
-            console.log(inputob)
             let attd = await axios.post(`/TimeTableInfos/getStudentAttdBySubjectId`, inputob)
             let attendance
             if (attd.status == 200) {
@@ -309,8 +317,6 @@ export default {
                 })
                 let presentcount = this.present.true ?? 0
                 let absentcount = this.present.false ?? 0
-
-                console.log(presentcount,absentcount)
                 if ((presentcount + absentcount) != 0) {
                     this.chartData = [
                     ['', ''],
@@ -318,7 +324,6 @@ export default {
                     ['Attended', presentcount]
                 ]
                 }
-                console.log(this.chartData)
             }
         },
 
@@ -346,8 +351,6 @@ export default {
                 })
                 let presentcountp = this.presentp.true ?? 0
                 let absentcountp = this.presentp.false ?? 0
-
-                console.log(presentcountp,absentcountp)
                 if ((presentcountp + absentcountp) != 0) {
                     this.chartDatap = [
                     ['', ''],
@@ -355,24 +358,8 @@ export default {
                     ['Attended', presentcountp]
                 ]
                 }
-                console.log(this.chartDatap)
             }
         },
-        async fetchTodo() {
-            let query1 = {
-            where: {
-                todoOwner: localStorage.getItem("userid")
-            }
-            }
-            // Fetch TO-DO stored in API
-            let todourl = `/Todos?filter=${JSON.stringify(query1)}`
-            console.log(todourl)
-            let result2 = await axios.get(todourl);
-            if (result2.status == 200){
-                this.todolist = [...result2.data]
-                console.log(result2.data)
-            }
-        }
     },
 
     async mounted() {
@@ -419,10 +406,8 @@ export default {
                 const ttStartDuration = ttHour * 3600 + ttMinute * 60
                 const ttEndDuration = ttHour1 * 3600 + ttMinute1 * 60
                 const currDuration = currHour * 3600 + currMinute * 60
-                console.log((currDay == ob.ttDay) && (currDuration >= ttStartDuration && currDuration <= ttEndDuration))
                 return (currDay == ob.ttDay) && (currDuration >= ttStartDuration && currDuration <= ttEndDuration)
             })
-            console.log(this.currTTrecord)
 
             // For Upcoming lecture/lab
             let tempTime 
@@ -446,7 +431,6 @@ export default {
             })
 
             this.nextTTrecord = _.sortBy(temp12,ob => {
-                    console.log(ob)
                     const [hours, minutes, seconds] = ob.ttStartTime.split(':');
                     const hours1= parseInt(hours) 
                     const minutes1= parseInt(minutes) 
@@ -455,16 +439,16 @@ export default {
                     return totalSeconds
                 })
             console.log(this.nextTTrecord)
-            this.nextTTrecord.forEach(element => {
-                console.log(element.subjectInfos.subName)
-            });
+            // this.nextTTrecord.forEach(element => {
+            //     console.log(element.subjectInfos.subName)
+            // });
         }    
         }
 
         this.drawchart()
+        await this.fetchTodo()
         await this.fetchAtt()
         await this.fetchAttp()
-        await this.fetchTodo()
 
         }
         catch(error){

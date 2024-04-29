@@ -14,7 +14,6 @@
                 <p class="text-2xl font-bold px-4">Schedule</p>
 
                 <!-- Download pdf file of timetable -->
-                <!-- <button @click="printPage"> -->
                 <button onclick="window.print()">
                     <i class="fa-solid fa-file-arrow-down p-4 rounded-full hover:bg-gray-100 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"></i>
                 </button>
@@ -103,7 +102,6 @@ export default {
             const student = await util.fetchstuInfo()
 
         let currayid = await util.fetchacademicyear()
-        // currayid=10-1
         let result3 = await axios.get(`/TimeTableInfos/getTTRecordListByStudent/${student.stuId}/${currayid}`)
 
         let timetable
@@ -142,15 +140,8 @@ export default {
             return _.uniqBy(this.timetable, ob => ob.subjectInfos ?.subId)
         },
         facultyList() {
-            console.log(this.timetable)
             return _.uniqBy(this.timetable, ob => ob.facultyInfos ?.empId)
         },
     },
-    methods: {
-        // printPage() {
-        //     document.querySelectorAll('.sidebar, .navbar').forEach(element => {element.style.display = 'none';});
-        //     window.print();
-        // }
-    }
 }
 </script>
