@@ -30,8 +30,8 @@
                         <h3 class="text-md font-semibold">{{ student.stuFirstname }} {{student.stuLastname }}</h3>
                         <p>Department: {{ dept.deptName }} </p>
                         <p>Semester: {{student.fcurrsem}}</p>
-                        <p>Class: </p>
-                        <p>Batch: </p>
+                        <p>Class: {{studentClasses}} </p>
+                        <p>Batch: {{ studentBatches }} </p>
                         <p>Enrollment No.: {{student.stuEnroll}}</p>
                     </div>
 
@@ -187,8 +187,8 @@
                                     <p class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ dept.deptCode }}</p>
                                 </div>
                                 <div class="w-full">
-                                    <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Batch Info.</label>
-                                    <p class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{  }}</p>
+                                    <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">College Id</label>
+                                    <p class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ student.stuCollegeId }}</p>
                                 </div>
                                 <div class="w-full">
                                     <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gujcet seat No.</label>
@@ -218,6 +218,7 @@ import axios from '../axios.js'
 import Aside from './aside.vue'
 import Nav from './nav.vue'
 import Spinner from './spinner.vue'
+import _ from 'lodash'
 export default {
     name: 'Profile',
     components: {
@@ -228,7 +229,10 @@ export default {
     data() {
         return {
             student: [],
+            studentAlloc: [],
             dept:[],
+            studentClasses: [],
+            studentBatches: [],
             loading: false,
             isOpen: false,
         }
@@ -249,12 +253,23 @@ export default {
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
             this.student = result.data[0]
-        console.log(this.student)
+        // console.log(this.student)
 
         let result1 = await axios.get(`/DepartmentInfos?filter=${JSON.stringify(query)}`);
         if (result1.status == 200)
             this.dept = result1.data[0]
-        console.log(this.dept)
+        // console.log(this.dept)
+
+        let result2 = await axios.get(`/StudentInfos/${this.student.stuId}/studentAllocations`);
+        if (result2.status == 200) {
+            let studentAlloc = result2.data
+            this.studentClasses=[]
+            this.studentBatches=[]
+            studentAlloc.map(ob=>{
+                this.studentClasses.push(ob.classId)
+                this.studentBatches.push(ob.batchId)
+            })
+        }
         }
         catch(error) {
             console.log("Error", error)
