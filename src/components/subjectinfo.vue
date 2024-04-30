@@ -1,7 +1,7 @@
 <template>
-<Nav />
+<Nav @toggle="isOpen=!isOpen" />
 <div class="flex">
-    <Aside />
+    <Aside :class="[isOpen?'flex':'md:flex hidden']" />
     <main class="w-full px-4 bg-white md:ml-52 h-auto pt-20">
         <div class="text-2xl font-bold px-4">
             {{ subjectinfo?subjectinfo.subName:"subject not found" }}
@@ -126,6 +126,7 @@ export default {
             attendance: [],
             subjects: [],
             refbook: [],
+            isOpen: false,
             chartData: [
                 ['Subject', 'Present',{
                     role: 'annotation'
