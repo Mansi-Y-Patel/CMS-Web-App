@@ -5,7 +5,6 @@
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         
         <p class="text-2xl font-bold px-4">Attendance</p>
-
         <div class="lg:flex w-full mt-4 gap-3">
             
             <!-- Theory Attendance -->

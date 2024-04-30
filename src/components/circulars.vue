@@ -5,7 +5,9 @@
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         <p class="text-2xl font-bold px-4">Circulars</p>
         <section class="p-2 bg-white dark:bg-gray-900">
-            <div class="py-6 px-4 mx-auto max-w-screen-xl sm:py-6 lg:px-6">
+            <div class="">No Circulars</div>
+            <div class="">Facility under construction</div>
+            <!-- <div class="py-6 px-4 mx-auto max-w-screen-xl sm:py-6 lg:px-6">
                 <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:space-y-0">
                     <div class="shadow-md shadow-gray-400 rounded-lg p-6">
                         <div class="flex justify-between mb-2">
@@ -54,7 +56,7 @@
                     </div>
                     
                 </div>
-            </div>
+            </div> -->
           </section>
     </main>
 </div>
