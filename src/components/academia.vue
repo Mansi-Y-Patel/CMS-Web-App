@@ -1,7 +1,7 @@
 <template>
-<Nav />
+<Nav @toggle="isOpen=!isOpen" />
 <div class="flex">
-    <Aside />
+    <Aside :class="[isOpen?'flex':'md:flex hidden']" />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         <div class="" v-if="loading">
             <Spinner></Spinner>
@@ -65,6 +65,7 @@ export default {
             attendance: [],
             subjects: [],
             loading: false,
+            isOpen: false,
         }
     },
     async mounted() {

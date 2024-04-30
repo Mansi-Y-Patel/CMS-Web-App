@@ -1,8 +1,8 @@
 <template>
 <div class="w-full dark:bg-gray-900">
-    <Nav @toggle="toggleMenu" />
+    <Nav @toggle="isOpen=!isOpen" />
     <div class="flex w-full">
-        <Aside :class="[isOpen?'flex':'sm:flex hidden']" />
+        <Aside :class="[isOpen?'flex':'md:flex hidden']" />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
             <div class="" v-if="loading">
                 <Spinner></Spinner>
@@ -194,11 +194,6 @@ export default {
     },
 
     methods: {
-
-        toggleMenu(){
-            console.log("menu toggle")
-            this.isOpen=!this.isOpen
-        },
 
         // To-do list method
         async addNote() {

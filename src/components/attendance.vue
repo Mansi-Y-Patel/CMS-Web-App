@@ -1,7 +1,7 @@
 <template>
-<Nav />
+<Nav @toggle="isOpen=!isOpen" />
 <div class="flex">
-    <Aside />
+    <Aside :class="[isOpen?'flex':'md:flex hidden']" />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         
         <p class="text-2xl font-bold px-4">Attendance</p>
@@ -65,6 +65,7 @@ export default {
             subjects: [],
             present: [],
             student:[],
+            isOpen: false,
             chartData: [
                 ['Subject', 'Present',{
                     role: 'annotation'

@@ -1,9 +1,9 @@
 <template>
 <div class="w-full dark:bg-gray-900">
-    <Nav class="navbar" />
+    <Nav @toggle="isOpen=!isOpen" />
 
     <div class="flex">
-        <Aside class="sidebar "/>
+        <Aside :class="[isOpen?'flex':'md:flex hidden']"/>
 
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
             <div v-if="loading">
@@ -91,6 +91,7 @@ export default {
             attendance: [],
             timetable: [],
             loading: false,
+            isOpen: false,
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         }
     },
