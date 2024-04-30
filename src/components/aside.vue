@@ -1,8 +1,8 @@
 <template>
-<aside class="pt-16 fixed z-40 h-screen w-52 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav" id="drawer-navigation">
+<aside class="pt-16 fixed z-40 h-screen w-52 transition-all  bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" >
 
     <div class="px-3 dark:bg-gray-800">
-        <ul class="mx-2 my-4" id="sidebar">
+        <ul class="mx-2 my-4">
 
             <!-- Dashboard -->
             <li class="my-4">

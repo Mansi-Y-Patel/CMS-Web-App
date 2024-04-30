@@ -1,9 +1,8 @@
 <template>
 <div class="w-full dark:bg-gray-900">
-    <Nav />
-
+    <Nav @toggle="toggleMenu" />
     <div class="flex w-full">
-        <Aside />
+        <Aside :class="[isOpen?'flex':'sm:flex hidden']" />
         <main class="w-full p-4 bg-white md:ml-52 pt-16">
             <div class="" v-if="loading">
                 <Spinner></Spinner>
@@ -187,7 +186,7 @@ export default {
             currTTrecord: {},
             nextTTrecord: {},
             loading: false,
-
+            isOpen: false,
             noNotesMessage: "No To-Do\'s created.",
             dayNameList: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"],
             newNote: '',
@@ -195,6 +194,11 @@ export default {
     },
 
     methods: {
+
+        toggleMenu(){
+            console.log("menu toggle")
+            this.isOpen=!this.isOpen
+        },
 
         // To-do list method
         async addNote() {
