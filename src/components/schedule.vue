@@ -14,9 +14,9 @@
                 <p class="text-2xl font-bold px-4">Schedule</p>
 
                 <!-- Download pdf file of timetable -->
-                <button onclick="window.print()">
+                <!-- <button onclick="window.print()">
                     <i class="fa-solid fa-file-arrow-down p-4 rounded-full hover:bg-gray-100 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"></i>
-                </button>
+                </button> -->
             </div>
 
             <!-- Timetable -->

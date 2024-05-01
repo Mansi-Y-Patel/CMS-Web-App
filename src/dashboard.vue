@@ -53,10 +53,6 @@
                                 <GChart v-if="chartDatap && chartOptions" type="PieChart" :data="chartDatap" :options="chartOptions" />
                             </div>
                         </div>
-                        <!-- <div v-else class="h-1/2 p-7 shadow-md shadow-gray-400 rounded-lg ">
-                            <p class="mb-2">Upcoming</p>
-                            <p class="font-bold text-lg">No Upcoming lecture/lab</p>
-                        </div> -->
                     </div>
                 </div>
 

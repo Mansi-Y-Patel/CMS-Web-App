@@ -14,14 +14,13 @@
                     <p class="text-black mb-1">Hundreds of companies visiting every year in search of talented students.</p>
                 </div>
 
-                
+
                 <!-- <div class="grid grid-cols-2 gap-4">
                     <img class="w-full rounded-lg" src="../images/placement/placement3.jpeg">
                     <img class="mt-4 w-full lg:mt-10 rounded-lg" src="../images/placement/Placement_cell1.jpeg">
                 </div> -->
                 
-
-                <!-- <div id="gallery" class="relative w-full" data-carousel="slide">
+                <div id="gallery" class="relative w-full" data-carousel="slide">
                     <div class="relative h-56 overflow-hidden md:h-96">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
                             <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -51,7 +50,7 @@
                             <span class="sr-only">Next</span>
                         </span>
                     </button>
-                </div> -->
+                </div>
 
             </div>
 
