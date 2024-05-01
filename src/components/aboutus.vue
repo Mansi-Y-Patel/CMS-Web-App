@@ -26,7 +26,7 @@
 
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
                     <div class="mb-6 flex justify-center">
-                            <img class="size-40 rounded-full" src="../images/Varun.jpg">
+                            <img class="size-40 rounded-full" src="../images/Varun Oza.jpg">
                     </div>
                     <div class="grid grid-flow-col">
                         <div class="grid justify-center items-center">
