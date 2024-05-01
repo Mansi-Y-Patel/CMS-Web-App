@@ -39,8 +39,16 @@
             <!-- Profile -->
             <li class="my-4">
                 <router-link to="/profile" :class="{ active: $route.path === '/profile' }" class="flex items-center p-2 text-base font-normal rounded-full dark:text-white hover:bg-gray-100 hover:text-blue-700 dark:hover:bg-gray-700 group">
-                    <i class="fa-regular fa-circle-user icon"></i>
+                    <i class="fa-solid fa-circle-user"></i>
                     <p class="ml-6 font-medium">Profile</p>
+                </router-link>
+            </li>
+
+            <!-- About Us -->
+            <li class="my-4">
+                <router-link to="/aboutus" :class="{ active: $route.path === '/aboutus' }" class="flex items-center p-2 text-base font-normal rounded-full dark:text-white hover:bg-gray-100 hover:text-blue-700 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-users"></i>
+                    <p class="ml-6 font-medium">About Us</p>
                 </router-link>
             </li>
 

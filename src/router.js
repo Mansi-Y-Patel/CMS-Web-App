@@ -8,9 +8,8 @@ import Profile from './components/profile.vue'
 import Schedule from './components/schedule.vue'
 import SubjectInfo from './components/subjectinfo.vue'
 import Attendance from './components/attendance.vue'
+import AboutUs from './components/aboutus.vue'
 import 'flowbite';
-
-// import App from './App.vue'
 
 const routes = [
     // { path: '/', component: App, meta: { requireauth: false } },
@@ -28,6 +27,7 @@ const routes = [
     { path: '/explore', component: Explore, meta: { requireauth: true } },
     { path: '/circulars', component: Circulars, meta: { requireauth: true } },
     { path: '/profile', component: Profile, meta: { requireauth: true } },
+    { path: '/aboutus', component: AboutUs, meta: { requireauth: true } },
 ]
 
 const router = createRouter({
