@@ -255,19 +255,29 @@ export default {
             this.student = result.data[0]
         // console.log(this.student)
 
+
         let result1 = await axios.get(`/DepartmentInfos?filter=${JSON.stringify(query)}`);
         if (result1.status == 200)
             this.dept = result1.data[0]
         // console.log(this.dept)
 
-        let result2 = await axios.get(`/StudentInfos/${this.student.stuId}/studentAllocations`);
+        let query2 = {
+            include: [
+                {relation: 'classInfo'},
+                {relation:'batchInfo'}
+                ]
+        }
+
+        let result2 = await axios.get(`/StudentInfos/${this.student.stuId}/studentAllocations?filter=${JSON.stringify(query2)}`);
         if (result2.status == 200) {
             let studentAlloc = result2.data
-            this.studentClasses=[]
-            this.studentBatches=[]
-            studentAlloc.map(ob=>{
-                this.studentClasses.push(ob.classId)
-                this.studentBatches.push(ob.batchId)
+            console.log(studentAlloc.length)
+            this.studentClasses=""
+            this.studentBatches=""
+            studentAlloc.map((ob,index)=>{
+                this.studentClasses+=(ob.classInfo.className)+(index!=studentAlloc.length-1?", ":"")
+                
+                this.studentBatches+=(ob.batchInfo.batchName)+(index!=studentAlloc.length-1?", ":"")
             })
         }
         }
