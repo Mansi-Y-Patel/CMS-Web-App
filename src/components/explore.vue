@@ -4,10 +4,10 @@
     <Aside :class="[isOpen?'flex':'md:flex hidden']" />
     <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
         <p class="text-2xl font-bold px-4 mb-5">Explore more about us!</p>
-        <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2 gap-6 m-2">
+        <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2">
 
             <!-- Placement -->
-            <div class="p-8 items-center  rounded-lg shadow-sm shadow-gray-700">
+            <div class="p-8 m-2 items-center  rounded-lg shadow-sm shadow-gray-700">
                 <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">Placement</h2>
                     <p class="text-black font-medium mb-3">Explore the opportunities</p>
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Prakarsh -->
-            <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+            <div class="p-8 m-2 items-center rounded-lg shadow-sm shadow-gray-700">
                 <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">Prakarsh</h2>
                     <p class="text-black font-medium mb-3">A National Level Technical Symposium</p>
@@ -69,7 +69,7 @@
             </div>
 
             <!-- Malhar -->
-            <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+            <div class="p-8 m-2 items-center rounded-lg shadow-sm shadow-gray-700">
                 <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">Malhar</h2>
                     <p class="text-black font-medium mb-3">Annual function</p>
@@ -82,7 +82,7 @@
             </div>
 
             <!-- Spandan -->
-            <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+            <div class="p-8 m-2 items-center rounded-lg shadow-sm shadow-gray-700">
                 <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">Spandan</h2>
                     <p class="text-black font-medium mb-3">College Level Sports Festival</p>

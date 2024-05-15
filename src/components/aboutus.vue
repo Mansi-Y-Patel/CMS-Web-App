@@ -4,10 +4,10 @@
         <Aside :class="[isOpen?'flex':'md:flex hidden']" />
         <main class="w-full p-4 bg-white md:ml-52 h-auto pt-20">
             <p class="text-2xl font-bold px-4 mb-5">Meet our Developer Team</p>
-            <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2 gap-6 m-8">
+            <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2">
     
                 <!-- Mansi -->
-                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/photo.jpg">
                     </div>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Varun Oza.jpg">
                     </div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Neha Soni.jpg">
                     </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Milin Patel.jpg">
                     </div>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700">
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Keyur Suthar.jpg">
                     </div>
