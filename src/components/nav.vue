@@ -15,8 +15,8 @@
             <div class="flex justify-between w-full">
                 <div class="flex items-center mr-4">
                     <img src="../images/logo1.png" class="mr-3 h-8" />
-                    <span class="self-center lg:text-xl font-semibold whitespace-nowrap dark:text-white text-wrap">Sardar
-                        Vallabhbhai Patel Institute of Technology</span>
+                    <div class="self-center lg:text-xl font-semibold whitespace-nowrap dark:text-white text-wrap">Sardar
+                        Vallabhbhai Patel Institute of Technology</div>
                 </div>
                 <div class="bg-blue-600 lg:mx-1 relative inline-flex items-center justify-center w-10 h-10 overflow-hidden rounded-full dark:bg-gray-600">
                     <div class="font-medium  text-white dark:text-gray-300">{{fn}}{{ln}}</div>
