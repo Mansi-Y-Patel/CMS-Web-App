@@ -19,11 +19,7 @@
 
         <div class="gap-3 px-4">
             <div class="w-full">
-                <!-- :src=[student.stuPhoto]  -->
                 <div class="gap-1 m-1 items-center lg:grid lg:grid-cols-2 bg-white">
-                    <!-- <div class="">
-                        <img src="../images/photo.jpg" alt="Student Profile Picture" class="rounded-full w-44">
-                    </div> -->
 
                     <!-- General Information -->
                     <div class="p-5">
@@ -253,13 +249,10 @@ export default {
         let result = await axios.get(`/StudentInfos?filter=${JSON.stringify(query)}`);
         if (result.status == 200)
             this.student = result.data[0]
-        // console.log(this.student)
-
 
         let result1 = await axios.get(`/DepartmentInfos?filter=${JSON.stringify(query)}`);
         if (result1.status == 200)
             this.dept = result1.data[0]
-        // console.log(this.dept)
 
         let query2 = {
             include: [

@@ -233,7 +233,6 @@ export default {
                 else {
                     this.chartDatap.push([subject.subAlias, presentcountp,"0%", absentcountp]) 
                 }
-                // console.log(this.chartDatap)
             }
         },
         // drawchart() {}
@@ -258,7 +257,6 @@ export default {
         `);
         if (result.status == 200)
         this.refbook = result.data[0].refBook.split('\n')
-        // console.log(result.data[0].refBook.split('\n'))
     },
 }
 </script>import { stringify } from 'postcss'

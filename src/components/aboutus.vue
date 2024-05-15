@@ -6,7 +6,7 @@
             <p class="text-2xl font-bold px-4 mb-5">Meet our Developer Team</p>
             <section class="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-2">
     
-                <!-- Mansi -->
+                <!-- Mansi Patel-->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/photo.jpg">
@@ -24,6 +24,7 @@
                     </div>
                 </div>
 
+                <!-- Varun Oza -->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Varun Oza.jpg">
@@ -41,6 +42,7 @@
                     </div>
                 </div>
 
+                <!-- Neha Soni -->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Neha Soni.jpg">
@@ -57,6 +59,7 @@
                     </div>
                 </div>
 
+                <!-- Milin Patel -->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Milin Patel.jpg">
@@ -73,6 +76,7 @@
                     </div>
                 </div>
 
+                <!-- Keyur Suthar -->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
                             <img class="size-40 rounded-full" src="../images/Keyur Suthar.jpg">

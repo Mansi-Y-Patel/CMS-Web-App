@@ -433,10 +433,7 @@ export default {
                     console.log(hours1,totalSeconds)
                     return totalSeconds
                 })
-            console.log(this.nextTTrecord)
-            // this.nextTTrecord.forEach(element => {
-            //     console.log(element.subjectInfos.subName)
-            // });
+            
         }    
         }
 

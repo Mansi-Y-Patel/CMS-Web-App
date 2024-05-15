@@ -54,7 +54,6 @@ export default {
 
         async login() {
             try {
-                // console.log(axios.defaults.baseURL, axios.defaults.headers.common.Authorization)
                 console.log(this.email, this.password)
                 const response = await axios.post('/UserAccounts/login', {
                     email: this.email,
