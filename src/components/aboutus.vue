@@ -42,6 +42,24 @@
                     </div>
                 </div>
 
+                <!-- Shivang Bhatt -->
+                <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
+                    <div class="mb-6 flex justify-center">
+                            <img class="size-40 rounded-full" src="../images/Shivang Bhatt.jpg">
+                    </div>
+                    <div class="grid grid-flow-col">
+                        <div class="grid justify-center items-center">
+                            <h2 class="mb-3 text-2xl font-extrabold text-gray-900 dark:text-white">Shivang U. Bhatt</h2>
+                            <p class="text-black font-bold mb-3">Web Developer</p>
+                            <p class="text-black font-semibold mb-1">Department: Computer Engineering</p>
+                            <p class="text-black font-semibold">Batch: 2018-2024</p>
+                        </div>
+                        <!-- <div class="text-black items-center">
+                            <a href="" target="_blank"><i class="fa-brands fa-linkedin text-3xl flex justify-center" style="color:#0077b5;"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+
                 <!-- Neha Soni -->
                 <div class="p-8 items-center rounded-lg shadow-sm shadow-gray-700 m-3">
                     <div class="mb-6 flex justify-center">
